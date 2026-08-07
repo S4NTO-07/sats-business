@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sats for Business — Muestra tus precios en Bitcoin</title>
+<meta name="description" content="Widget gratis que muestra tus precios en satoshis. Para tiendas físicas, e-commerce y empresas."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --btc:#F7931A;--btc-l:rgba(247,147,26,0.1);--btc-b:rgba(247,147,26,0.25);
+  --bg:#0a0a0a;--bg2:#141414;--bg3:#1c1c1c;--line:#252525;
+  --text:#f2f2f2;--muted:#777;--muted2:#444;--green:#22c55e;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;font-size:15px;line-height:1.6}
+
+nav{display:flex;align-items:center;justify-content:space-between;padding:16px 40px;border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(10,10,10,0.92);backdrop-filter:blur(8px);z-index:100}
+.nav-logo{width:30px;height:30px;background:var(--btc);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:#fff}
+.nav-brand{display:flex;align-items:center;gap:9px;font-size:15px;font-weight:700}
+.nav-links{display:flex;align-items:center;gap:20px}
+.nav-link{color:var(--muted);text-decoration:none;font-size:13px;transition:color .15s}
+.nav-link:hover{color:var(--text)}
+.lang-btn{background:var(--bg3);border:1px solid var(--line);color:var(--muted);border-radius:6px;padding:5px 10px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .15s}
+.lang-btn:hover{border-color:var(--btc);color:var(--btc)}
+.btn-nav{background:var(--btc);color:#fff;border:none;border-radius:8px;padding:8px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:opacity .15s}
+.btn-nav:hover{opacity:.88}
+
+.hero{max-width:780px;margin:0 auto;padding:90px 24px 60px;text-align:center}
+.badge{display:inline-flex;align-items:center;gap:6px;background:var(--btc-l);border:1px solid var(--btc-b);border-radius:20px;padding:5px 14px;font-size:12px;font-weight:600;color:var(--btc);margin-bottom:24px;letter-spacing:.3px}
+.hero h1{font-size:clamp(34px,6vw,58px);font-weight:800;letter-spacing:-1.5px;line-height:1.1;margin-bottom:20px}
+.hero h1 em{font-style:normal;color:var(--btc)}
+.hero p{font-size:17px;color:var(--muted);max-width:520px;margin:0 auto 36px;line-height:1.7}
+.btns{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn-p{background:var(--btc);color:#fff;border:none;border-radius:10px;padding:14px 32px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;transition:opacity .15s;text-decoration:none;display:inline-block}
+.btn-p:hover{opacity:.88}
+.btn-s{background:transparent;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:14px 32px;font-size:15px;cursor:pointer;font-family:inherit;transition:all .15s;text-decoration:none;display:inline-block}
+.btn-s:hover{border-color:var(--muted)}
+
+.demo-wrap{max-width:860px;margin:0 auto;padding:0 24px 80px}
+.demo-lbl{text-align:center;font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--muted2);margin-bottom:18px}
+.browser{background:var(--bg2);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.browser-bar{background:var(--bg3);border-bottom:1px solid var(--line);padding:10px 14px;display:flex;align-items:center;gap:8px}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--line)}
+.url-bar{flex:1;background:var(--bg);border-radius:5px;padding:5px 12px;font-size:11px;color:var(--muted);margin:0 8px;font-family:monospace}
+.browser-body{padding:24px 28px}
+.product{display:flex;gap:20px;align-items:flex-start}
+.prod-img{width:96px;height:96px;background:var(--bg3);border-radius:8px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:34px}
+.prod-name{font-size:16px;font-weight:600;margin-bottom:4px}
+.prod-sku{font-size:12px;color:var(--muted);margin-bottom:12px}
+.price-row{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.price{font-size:28px;font-weight:700}
+.sats-tag{font-size:13px;font-weight:700;color:var(--btc);background:var(--btc-l);border:1px solid var(--btc-b);border-radius:5px;padding:3px 10px}
+.prod-stock{font-size:12px;color:var(--green);margin-top:8px}
+.prod-btn{background:var(--btc);color:#fff;border:none;border-radius:8px;padding:10px 22px;font-size:13px;font-weight:600;cursor:pointer;margin-top:14px;font-family:inherit}
+
+hr.div{border:none;border-top:1px solid var(--line);margin:0}
+
+.sec{max-width:880px;margin:0 auto;padding:64px 24px}
+.sec-lbl{text-align:center;font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:12px}
+.sec h2{text-align:center;font-size:clamp(24px,4vw,34px);font-weight:700;letter-spacing:-.5px;margin-bottom:48px}
+
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.step{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:24px}
+.step-n{width:30px;height:30px;background:var(--btc);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#fff;margin-bottom:14px}
+.step h3{font-size:14px;font-weight:600;margin-bottom:6px}
+.step p{font-size:13px;color:var(--muted);line-height:1.6}
+.code{background:var(--bg3);border:1px solid var(--line);border-radius:6px;padding:8px 12px;font-size:11px;font-family:monospace;color:var(--btc);margin-top:10px;word-break:break-all}
+
+.plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.plan{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:24px}
+.plan.hot{border-color:var(--btc)}
+.plan-tag{display:inline-block;background:var(--btc);color:#fff;font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px;letter-spacing:.5px;margin-bottom:12px}
+.plan h3{font-size:15px;font-weight:700;margin-bottom:4px}
+.plan-price{font-size:28px;font-weight:800;color:var(--btc);letter-spacing:-.5px}
+.plan-price span{font-size:13px;font-weight:400;color:var(--muted)}
+.plan-desc{font-size:12px;color:var(--muted);margin:8px 0 16px;line-height:1.5}
+.feats{list-style:none;display:flex;flex-direction:column;gap:7px}
+.feats li{font-size:13px;color:var(--muted);display:flex;align-items:flex-start;gap:7px}
+.feats li::before{content:"✓";color:var(--green);font-weight:700;flex-shrink:0;margin-top:1px}
+
+.form-wrap{max-width:540px;margin:0 auto;padding:60px 24px 80px}
+.form-card{background:var(--bg2);border:1px solid var(--line);border-radius:16px;padding:36px}
+.form-card h2{font-size:22px;font-weight:700;letter-spacing:-.3px;margin-bottom:6px}
+.form-sub{font-size:14px;color:var(--muted);margin-bottom:28px}
+.fg{margin-bottom:16px}
+.lbl{display:block;font-size:11px;font-weight:600;color:var(--muted);margin-bottom:6px;letter-spacing:.3px}
+.inp{width:100%;background:var(--bg3);border:1px solid var(--line);color:var(--text);border-radius:8px;padding:11px 14px;font-size:14px;font-family:inherit;transition:border-color .15s;outline:none}
+.inp:focus{border-color:var(--btc)}
+.inp::placeholder{color:var(--muted2)}
+.btn-submit{width:100%;background:var(--btc);color:#fff;border:none;border-radius:10px;padding:14px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;transition:opacity .15s;margin-top:8px}
+.btn-submit:hover{opacity:.88}
+.form-note{font-size:11px;color:var(--muted2);text-align:center;margin-top:14px}
+.success{display:none;text-align:center;padding:24px 0}
+.success-icon{font-size:44px;margin-bottom:12px}
+.success h3{font-size:18px;font-weight:700;margin-bottom:6px}
+.success p{font-size:13px;color:var(--muted)}
+
+footer{border-top:1px solid var(--line);padding:28px 40px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px}
+.ft-links{display:flex;gap:20px}
+.ft-link{font-size:12px;color:var(--muted);text-decoration:none;transition:color .15s}
+.ft-link:hover{color:var(--btc)}
+
+@media(max-width:600px){
+  nav{padding:12px 18px}.nav-links{gap:10px}
+  .hero{padding:56px 20px 36px}
+  .product{flex-direction:column}
+  .prod-img{width:100%;height:72px}
+  footer{padding:22px 20px;flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">
+    <div class="nav-logo">₿</div>
+    <span>Sats <span style="color:var(--muted);font-weight:400">for Business</span></span>
+  </div>
+  <div class="nav-links">
+    <a href="#como-funciona" class="nav-link" id="l-how">Cómo funciona</a>
+    <a href="#precios" class="nav-link" id="l-pricing">Precios</a>
+    <a href="#demo" class="nav-link" id="l-demo-nav">Demo</a>
+    <a href="#piloto" class="nav-link" id="l-pilot-nav">Ser piloto</a>
+    <button class="lang-btn" id="langBtn">EN</button>
+    <button class="btn-nav" id="l-cta-nav" onclick="document.getElementById('piloto').scrollIntoView({behavior:'smooth'})">Quiero ser piloto</button>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="badge">⚡ <span id="l-badge">Programa piloto abierto — 10 cupos</span></div>
+  <h1 id="l-h1">Muestra tus precios<br>en <em>Bitcoin</em></h1>
+  <p id="l-hero-p">Un widget que pegas en tu sitio web y convierte automáticamente tus precios a satoshis. Tus clientes lo ven en tiempo real. Sin comisiones de instalación.</p>
+  <div class="btns">
+    <a href="#piloto" class="btn-p" id="l-cta1">Quiero ser piloto gratis</a>
+    <a href="#como-funciona" class="btn-s" id="l-cta2">Ver cómo funciona</a>
+  </div>
+</section>
+
+<!-- Demo -->
+<div class="demo-wrap">
+  <div class="demo-lbl" id="l-demo-lbl">Así se ve en tu tienda</div>
+  <div class="browser">
+    <div class="browser-bar">
+      <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+      <div class="url-bar">tutienda.com/producto</div>
+    </div>
+    <div class="browser-body">
+      <div class="product">
+        <div class="prod-img">☕</div>
+        <div>
+          <div class="prod-name" id="l-prod-name">Café de especialidad — 250g</div>
+          <div class="prod-sku">SKU: CAF-001</div>
+          <div class="price-row">
+            <span class="price">$280</span>
+            <span class="sats-tag" id="liveBadge">cargando…</span>
+          </div>
+          <div class="prod-stock" id="l-stock">✓ Envío gratis en pedidos mayores a $500</div>
+          <button class="prod-btn" id="l-add-cart">Agregar al carrito</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="div"/>
+
+<!-- How it works -->
+<section class="sec" id="como-funciona">
+  <div class="sec-lbl" id="l-how-lbl">Instalación</div>
+  <h2 id="l-how-title">Listo en 3 minutos</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="step-n">1</div>
+      <h3 id="l-s1t">Regístrate como piloto</h3>
+      <p id="l-s1p">Te damos acceso y un script personalizado para tu tienda en menos de 24 horas.</p>
+    </div>
+    <div class="step">
+      <div class="step-n">2</div>
+      <h3 id="l-s2t">Pega una línea en tu sitio</h3>
+      <p id="l-s2p">Funciona con Shopify, WordPress, Wix o cualquier sitio. Si puedes pegar texto, puedes instalarlo.</p>
+      <div class="code">&lt;script src="sats.js"&gt;&lt;/script&gt;</div>
+    </div>
+    <div class="step">
+      <div class="step-n">3</div>
+      <h3 id="l-s3t">Tus precios, en Bitcoin</h3>
+      <p id="l-s3p">Cada precio muestra el equivalente en sats. Se actualiza en tiempo real con el precio de BTC.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="div"/>
+
+<!-- Pricing -->
+<section class="sec" id="precios">
+  <div class="sec-lbl" id="l-pricing-lbl">Planes</div>
+  <h2 id="l-pricing-title">Simple y transparente</h2>
+  <div class="plans">
+    <div class="plan">
+      <h3 id="l-p1-name">Piloto</h3>
+      <div class="plan-price">$0 <span id="l-p1-period">/ mes · 3 meses</span></div>
+      <div class="plan-desc" id="l-p1-desc">Para los primeros 10 negocios. Instalación asistida incluida.</div>
+      <ul class="feats">
+        <li id="l-p1-f1">Widget en tu sitio web</li>
+        <li id="l-p1-f2">Precio BTC en tiempo real</li>
+        <li id="l-p1-f3">Soporte por WhatsApp</li>
+        <li id="l-p1-f4">Instalación asistida</li>
+      </ul>
+    </div>
+    <div class="plan hot">
+      <div class="plan-tag" id="l-popular">MÁS POPULAR</div>
+      <h3 id="l-p2-name">Negocio</h3>
+      <div class="plan-price">$500 <span>MXN / mes</span></div>
+      <div class="plan-desc" id="l-p2-desc">Para tiendas físicas y e-commerce.</div>
+      <ul class="feats">
+        <li id="l-p2-f1">Todo lo del plan Piloto</li>
+        <li id="l-p2-f2">Widget con tu marca</li>
+        <li id="l-p2-f3">QR en tiempo real para caja</li>
+        <li id="l-p2-f4">Estadísticas de uso</li>
+      </ul>
+    </div>
+    <div class="plan">
+      <h3 id="l-p3-name">Empresa</h3>
+      <div class="plan-price">$3,000 <span>MXN / mes</span></div>
+      <div class="plan-desc" id="l-p3-desc">Para distribuidoras y empresas con volumen.</div>
+      <ul class="feats">
+        <li id="l-p3-f1">Todo lo del plan Negocio</li>
+        <li id="l-p3-f2">API de integración</li>
+        <li id="l-p3-f3">Reporte mensual en sats y MXN</li>
+        <li id="l-p3-f4">Soporte prioritario</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<hr class="div"/>
+
+<!-- Form -->
+
+<hr class="div"/>
+
+<!-- Widget demo section -->
+<section class="sec" id="demo">
+  <div class="sec-lbl" id="l-demo-sec-lbl">Demo en vivo</div>
+  <h2 id="l-demo-sec-title">Míralo funcionando</h2>
+  <div style="text-align:center;margin-bottom:32px">
+    <p style="color:var(--muted);font-size:15px;margin-bottom:24px" id="l-demo-sec-p">
+      Abre la demo para ver el widget en una tienda real con precios en sats y botón de pago Lightning.
+    </p>
+    <a href="demo.html" target="_blank" class="btn-p" id="l-demo-btn"
+       style="display:inline-flex;align-items:center;gap:8px">
+      ⚡ Ver demo en vivo →
+    </a>
+  </div>
+  <div style="background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:20px 24px">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--muted2);margin-bottom:12px" id="l-install-lbl">Una sola línea de código</div>
+    <div style="background:#0a0a0a;border-radius:8px;padding:14px 16px;font-family:monospace;font-size:13px;color:#F7931A;overflow-x:auto">
+      &lt;script src="https://TU_USUARIO.github.io/sats-business/sats-widget.js"<br>
+      &nbsp;&nbsp;data-currency="MXN"<br>
+      &nbsp;&nbsp;data-lightning="tu@wallet.com"&gt;<br>
+      &lt;/script&gt;
+    </div>
+  </div>
+</section>
+
+<hr class="div"/>
+<div class="form-wrap" id="piloto">
+  <div class="form-card">
+    <div id="formContent">
+      <h2 id="l-form-title">Únete al programa piloto</h2>
+      <div class="form-sub" id="l-form-sub">Solo 10 cupos disponibles. Gratis durante 3 meses. Te contactamos en menos de 24 horas.</div>
+      <form id="pilotForm">
+        <div class="fg">
+          <label class="lbl" id="l-f-biz">NOMBRE DEL NEGOCIO</label>
+          <input type="text" class="inp" name="business" id="ph-biz" placeholder="Mi Tienda MX" required/>
+        </div>
+        <div class="fg">
+          <label class="lbl" id="l-f-name">TU NOMBRE</label>
+          <input type="text" class="inp" name="name" id="ph-name" placeholder="Santiago" required/>
+        </div>
+        <div class="fg">
+          <label class="lbl" id="l-f-phone">WHATSAPP O TELÉFONO</label>
+          <input type="tel" class="inp" name="phone" id="ph-phone" placeholder="+52 442 123 4567" required/>
+        </div>
+        <div class="fg">
+          <label class="lbl">EMAIL</label>
+          <input type="email" class="inp" name="email" placeholder="hola@mitienda.com" required/>
+        </div>
+        <div class="fg">
+          <label class="lbl" id="l-f-type">TIPO DE NEGOCIO</label>
+          <select class="inp" name="type" required>
+            <option value="" id="l-sel-default">Selecciona...</option>
+            <option value="fisica" id="l-sel-1">Tienda física</option>
+            <option value="ecommerce" id="l-sel-2">E-commerce / tienda online</option>
+            <option value="restaurante" id="l-sel-3">Restaurante / café</option>
+            <option value="servicios" id="l-sel-4">Servicios profesionales</option>
+            <option value="empresa" id="l-sel-5">Empresa / distribuidora</option>
+            <option value="otro" id="l-sel-6">Otro</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label class="lbl" id="l-f-web">SITIO WEB (OPCIONAL)</label>
+          <input type="url" class="inp" name="website" placeholder="https://mitienda.com"/>
+        </div>
+        <button type="submit" class="btn-submit" id="l-submit">Quiero ser piloto gratis</button>
+        <div class="form-note" id="l-form-note">Te contactamos por WhatsApp en menos de 24 horas.</div>
+      </form>
+    </div>
+    <div class="success" id="formSuccess">
+      <div class="success-icon">⚡</div>
+      <h3 id="l-success-title">¡Listo! Ya eres piloto</h3>
+      <p id="l-success-p">Te contactamos por WhatsApp en menos de 24 horas para comenzar la instalación.</p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="nav-brand">
+    <div class="nav-logo" style="width:24px;height:24px;font-size:13px">₿</div>
+    <span style="font-size:14px">Sats for Business</span>
+  </div>
+  <div class="ft-links">
+    <a href="https://github.com/YOUR_USERNAME/sats-extension" class="ft-link" target="_blank">GitHub</a>
+    <a href="privacy-policy.html" class="ft-link" id="l-ft-privacy">Privacidad</a>
+    <a href="mailto:s.zabal08@gmail.com" class="ft-link" id="l-ft-contact">Contacto</a>
+  </div>
+</footer>
+
+<script>
+var STRINGS = {
+  es: {
+    'l-badge':'Programa piloto abierto — 10 cupos',
+    'l-h1':'Muestra tus precios<br>en <em>Bitcoin</em>',
+    'l-hero-p':'Un widget que pegas en tu sitio web y convierte automáticamente tus precios a satoshis. Tus clientes lo ven en tiempo real. Sin comisiones de instalación.',
+    'l-cta1':'Quiero ser piloto gratis','l-cta2':'Ver cómo funciona',
+    'l-demo-lbl':'Así se ve en tu tienda',
+    'l-prod-name':'Café de especialidad — 250g',
+    'l-stock':'✓ Envío gratis en pedidos mayores a $500',
+    'l-add-cart':'Agregar al carrito',
+    'l-how':'Cómo funciona','l-pricing':'Precios','l-pilot-nav':'Ser piloto','l-demo-nav':'Demo','l-cta-nav':'Quiero ser piloto',
+    'l-how-lbl':'Instalación','l-how-title':'Listo en 3 minutos',
+    'l-s1t':'Regístrate como piloto','l-s1p':'Te damos acceso y un script personalizado para tu tienda en menos de 24 horas.',
+    'l-s2t':'Pega una línea en tu sitio','l-s2p':'Funciona con Shopify, WordPress, Wix o cualquier sitio. Si puedes pegar texto, puedes instalarlo.',
+    'l-s3t':'Tus precios, en Bitcoin','l-s3p':'Cada precio muestra el equivalente en sats. Se actualiza en tiempo real con el precio de BTC.',
+    'l-pricing-lbl':'Planes','l-pricing-title':'Simple y transparente',
+    'l-p1-name':'Piloto','l-p1-period':'/ mes · 3 meses','l-p1-desc':'Para los primeros 10 negocios. Instalación asistida incluida.',
+    'l-p1-f1':'Widget en tu sitio web','l-p1-f2':'Precio BTC en tiempo real','l-p1-f3':'Soporte por WhatsApp','l-p1-f4':'Instalación asistida',
+    'l-popular':'MÁS POPULAR','l-p2-name':'Negocio','l-p2-desc':'Para tiendas físicas y e-commerce.',
+    'l-p2-f1':'Todo lo del plan Piloto','l-p2-f2':'Widget con tu marca','l-p2-f3':'QR en tiempo real para caja','l-p2-f4':'Estadísticas de uso',
+    'l-p3-name':'Empresa','l-p3-desc':'Para distribuidoras y empresas con volumen.',
+    'l-p3-f1':'Todo lo del plan Negocio','l-p3-f2':'API de integración','l-p3-f3':'Reporte mensual en sats y MXN','l-p3-f4':'Soporte prioritario',
+    'l-form-title':'Únete al programa piloto','l-form-sub':'Solo 10 cupos disponibles. Gratis durante 3 meses. Te contactamos en menos de 24 horas.',
+    'l-f-biz':'NOMBRE DEL NEGOCIO','l-f-name':'TU NOMBRE','l-f-phone':'WHATSAPP O TELÉFONO','l-f-type':'TIPO DE NEGOCIO','l-f-web':'SITIO WEB (OPCIONAL)',
+    'ph-biz':'Mi Tienda MX','ph-name':'Santiago','ph-phone':'+52 442 123 4567',
+    'l-sel-default':'Selecciona...','l-sel-1':'Tienda física','l-sel-2':'E-commerce / tienda online',
+    'l-sel-3':'Restaurante / café','l-sel-4':'Servicios profesionales','l-sel-5':'Empresa / distribuidora','l-sel-6':'Otro',
+    'l-submit':'Quiero ser piloto gratis','l-form-note':'Te contactamos por WhatsApp en menos de 24 horas.',
+    'l-success-title':'¡Listo! Ya eres piloto','l-success-p':'Te contactamos por WhatsApp en menos de 24 horas para comenzar la instalación.',
+    'l-ft-privacy':'Privacidad','l-ft-contact':'Contacto','l-demo-sec-lbl':'Demo en vivo','l-demo-sec-title':'Míralo funcionando','l-demo-sec-p':'Abre la demo para ver el widget en una tienda real con precios en sats y botón de pago Lightning.','l-demo-btn':'⚡ Ver demo en vivo →','l-install-lbl':'Una sola línea de código'
+  },
+  en: {
+    'l-badge':'Pilot program open — 10 spots',
+    'l-h1':'Show your prices<br>in <em>Bitcoin</em>',
+    'l-hero-p':'A widget you paste on your website that automatically converts your prices to satoshis. Your customers see it in real time. No setup fees.',
+    'l-cta1':'Join the free pilot','l-cta2':'See how it works',
+    'l-demo-lbl':'This is how it looks in your store',
+    'l-prod-name':'Specialty coffee — 250g',
+    'l-stock':'✓ Free shipping on orders over $500',
+    'l-add-cart':'Add to cart',
+    'l-how':'How it works','l-pricing':'Pricing','l-pilot-nav':'Join pilot','l-demo-nav':'Demo','l-cta-nav':'Join the pilot',
+    'l-how-lbl':'Setup','l-how-title':'Ready in 3 minutes',
+    'l-s1t':'Sign up as a pilot','l-s1p':'We give you access and a custom script for your store within 24 hours.',
+    'l-s2t':'Paste one line on your site','l-s2p':'Works with Shopify, WordPress, Wix or any website. If you can paste text, you can install it.',
+    'l-s3t':'Your prices, in Bitcoin','l-s3p':'Every price shows the sats equivalent. Updates in real time with the BTC price.',
+    'l-pricing-lbl':'Plans','l-pricing-title':'Simple and transparent',
+    'l-p1-name':'Pilot','l-p1-period':'/ month · 3 months','l-p1-desc':'For the first 10 businesses. Assisted installation included.',
+    'l-p1-f1':'Widget on your website','l-p1-f2':'Real-time BTC price','l-p1-f3':'WhatsApp support','l-p1-f4':'Assisted installation',
+    'l-popular':'MOST POPULAR','l-p2-name':'Business','l-p2-desc':'For physical stores and e-commerce.',
+    'l-p2-f1':'Everything in Pilot','l-p2-f2':'Custom branded widget','l-p2-f3':'Real-time QR for checkout','l-p2-f4':'Usage statistics',
+    'l-p3-name':'Enterprise','l-p3-desc':'For distributors and high-volume businesses.',
+    'l-p3-f1':'Everything in Business','l-p3-f2':'Integration API','l-p3-f3':'Monthly report in sats and MXN','l-p3-f4':'Priority support',
+    'l-form-title':'Join the pilot program','l-form-sub':'Only 10 spots available. Free for 3 months. We contact you within 24 hours.',
+    'l-f-biz':'BUSINESS NAME','l-f-name':'YOUR NAME','l-f-phone':'WHATSAPP OR PHONE','l-f-type':'BUSINESS TYPE','l-f-web':'WEBSITE (OPTIONAL)',
+    'ph-biz':'My Store','ph-name':'John','ph-phone':'+1 555 123 4567',
+    'l-sel-default':'Select...','l-sel-1':'Physical store','l-sel-2':'E-commerce / online store',
+    'l-sel-3':'Restaurant / café','l-sel-4':'Professional services','l-sel-5':'Company / distributor','l-sel-6':'Other',
+    'l-submit':'Join the free pilot','l-form-note':'We\'ll contact you via WhatsApp within 24 hours.',
+    'l-success-title':'Done! You\'re now a pilot','l-success-p':'We\'ll contact you via WhatsApp within 24 hours to start installation.',
+    'l-ft-privacy':'Privacy','l-ft-contact':'Contact','l-demo-sec-lbl':'Live demo','l-demo-sec-title':'See it in action','l-demo-sec-p':'Open the demo to see the widget on a real store with sats prices and a Lightning payment button.','l-demo-btn':'⚡ View live demo →','l-install-lbl':'One line of code'
+  }
+};
+
+var lang = 'es';
+
+function applyLang(l) {
+  lang = l;
+  var s = STRINGS[l];
+  document.getElementById('langBtn').textContent = l === 'es' ? 'EN' : 'ES';
+  document.documentElement.lang = l;
+  Object.keys(s).forEach(function(id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    var v = s[id];
+    if (el.tagName === 'INPUT') { el.placeholder = v; }
+    else { el.innerHTML = v; }
+  });
+}
+
+document.getElementById('langBtn').addEventListener('click', function() {
+  applyLang(lang === 'es' ? 'en' : 'es');
+});
+
+var rate = 2500000;
+fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=mxn')
+  .then(function(r){return r.json();})
+  .then(function(d){
+    if(d&&d.bitcoin&&d.bitcoin.mxn){rate=d.bitcoin.mxn;updateBadge();}
+  }).catch(function(){});
+
+function updateBadge(){
+  var sats = Math.round((280/rate)*1e8);
+  var label = sats>=10000 ? Math.round(sats/1000)+'k sats' : sats.toLocaleString()+' sats';
+  document.getElementById('liveBadge').textContent = '~'+label;
+}
+updateBadge();
+
+document.getElementById('pilotForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  var fd = new FormData(e.target);
+  var body = 'Nuevo piloto Sats for Business:\n\n';
+  body += 'Negocio: ' + fd.get('business') + '\n';
+  body += 'Nombre: '  + fd.get('name')     + '\n';
+  body += 'Teléfono: '+ fd.get('phone')    + '\n';
+  body += 'Email: '   + fd.get('email')    + '\n';
+  body += 'Tipo: '    + fd.get('type')     + '\n';
+  body += 'Sitio: '   + (fd.get('website')||'N/A');
+  var sub = encodeURIComponent('Nuevo piloto: ' + fd.get('business'));
+  window.open('mailto:s.zabal08@gmail.com?subject='+sub+'&body='+encodeURIComponent(body));
+  document.getElementById('formContent').style.display='none';
+  document.getElementById('formSuccess').style.display='block';
+});
+</script>
+</body>
+</html>

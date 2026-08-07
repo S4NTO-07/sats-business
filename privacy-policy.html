@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sats — Privacy Policy</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --btc:    #F7931A;
+      --bg:     #0a0a0a;
+      --bg2:    #141414;
+      --border: #222;
+      --text:   #e8e8e8;
+      --muted:  #888;
+      --green:  #22c55e;
+      --red:    #ef4444;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+      font-size: 15px;
+      line-height: 1.7;
+      padding: 0 0 80px;
+    }
+
+    /* ── Header ─────────────────────────────────────────────────── */
+    header {
+      border-bottom: 1px solid var(--border);
+      padding: 32px 24px 28px;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .header-top {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 6px;
+    }
+
+    .logo {
+      width: 40px; height: 40px;
+      background: var(--btc);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; font-weight: 900; color: #fff;
+      flex-shrink: 0;
+    }
+
+    h1 {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      color: var(--text);
+    }
+
+    .updated {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    /* ── Content ─────────────────────────────────────────────────── */
+    main {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 40px 24px 0;
+    }
+
+    section {
+      margin-bottom: 40px;
+    }
+
+    h2 {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--btc);
+      margin-bottom: 14px;
+    }
+
+    p {
+      color: var(--text);
+      margin-bottom: 14px;
+    }
+
+    p:last-child { margin-bottom: 0; }
+
+    /* ── Summary cards ───────────────────────────────────────────── */
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 10px;
+      margin-bottom: 40px;
+    }
+
+    .card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+    }
+
+    .card-icon {
+      font-size: 20px;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .card-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .card-body {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .yes { border-top: 2px solid var(--green); }
+    .no  { border-top: 2px solid var(--red); }
+
+    /* ── Table ───────────────────────────────────────────────────── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      margin-bottom: 14px;
+    }
+
+    th {
+      text-align: left;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--muted);
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    td {
+      padding: 10px 12px;
+      border-bottom: 1px solid #1a1a1a;
+      vertical-align: top;
+      color: var(--text);
+    }
+
+    tr:last-child td { border-bottom: none; }
+
+    .tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+      letter-spacing: 0.3px;
+    }
+
+    .tag-no  { background: rgba(34,197,94,0.12); color: var(--green); }
+    .tag-yes { background: rgba(239,68,68,0.12);  color: var(--red); }
+    .tag-ext { background: rgba(247,147,26,0.12); color: var(--btc); }
+
+    /* ── Divider ─────────────────────────────────────────────────── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 40px 0;
+    }
+
+    /* ── Contact ─────────────────────────────────────────────────── */
+    .contact {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 24px;
+    }
+
+    .contact p { font-size: 14px; }
+
+    a {
+      color: var(--btc);
+      text-decoration: none;
+    }
+
+    a:hover { text-decoration: underline; }
+
+    code {
+      background: #1e1e1e;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1px 6px;
+      font-size: 13px;
+      font-family: 'SF Mono', 'Consolas', monospace;
+      color: #e0e0e0;
+    }
+
+    @media (max-width: 520px) {
+      .summary { grid-template-columns: 1fr 1fr; }
+      h1 { font-size: 18px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <div class="logo">₿</div>
+    <div>
+      <h1>Sats Privacy Policy</h1>
+    </div>
+  </div>
+  <p class="updated">Last updated: April 6, 2025 · Applies to the Sats browser extension</p>
+</header>
+
+<main>
+
+  <!-- ── TL;DR Summary ──────────────────────────────────────────── -->
+  <section>
+    <h2>TL;DR — The short version</h2>
+    <div class="summary">
+      <div class="card no">
+        <span class="card-icon">🚫</span>
+        <div class="card-title">No personal data collected</div>
+        <div class="card-body">We never collect names, emails, IP addresses, or any identifying information.</div>
+      </div>
+      <div class="card no">
+        <span class="card-icon">🚫</span>
+        <div class="card-title">No browsing history</div>
+        <div class="card-body">We never record which pages you visit or what prices you see.</div>
+      </div>
+      <div class="card no">
+        <span class="card-icon">🚫</span>
+        <div class="card-title">No third-party tracking</div>
+        <div class="card-body">No analytics, no ad networks, no tracking pixels of any kind.</div>
+      </div>
+      <div class="card yes">
+        <span class="card-icon">✅</span>
+        <div class="card-title">100% local processing</div>
+        <div class="card-body">All price conversion happens in your browser. Nothing leaves your device.</div>
+      </div>
+      <div class="card yes">
+        <span class="card-icon">✅</span>
+        <div class="card-title">Open source</div>
+        <div class="card-body">The full source code is public and auditable by anyone.</div>
+      </div>
+      <div class="card yes">
+        <span class="card-icon">✅</span>
+        <div class="card-title">One external request</div>
+        <div class="card-body">Only contacts CoinGecko's public API to fetch the BTC price.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── What data is collected ─────────────────────────────────── -->
+  <section>
+    <h2>Data collected</h2>
+    <p>Sats does not collect, store, transmit, or sell any personal data. The extension processes all information locally within your browser.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Data type</th>
+          <th>Collected?</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Personal identity (name, email, phone)</td>
+          <td><span class="tag tag-no">Never</span></td>
+          <td>Not requested, not stored anywhere.</td>
+        </tr>
+        <tr>
+          <td>Browsing history or visited URLs</td>
+          <td><span class="tag tag-no">Never</span></td>
+          <td>The extension reads page content to detect prices but does not log or transmit it.</td>
+        </tr>
+        <tr>
+          <td>Prices or page content</td>
+          <td><span class="tag tag-no">Never</span></td>
+          <td>Prices are read locally to convert them. Nothing is sent to any server.</td>
+        </tr>
+        <tr>
+          <td>Location or IP address</td>
+          <td><span class="tag tag-no">Never</span></td>
+          <td>Not collected or inferred.</td>
+        </tr>
+        <tr>
+          <td>User preferences (display mode, currency)</td>
+          <td><span class="tag tag-ext">Local only</span></td>
+          <td>Saved in <code>chrome.storage.sync</code> — synced across your own devices via your Google account, not accessible to us.</td>
+        </tr>
+        <tr>
+          <td>BTC/fiat exchange rate</td>
+          <td><span class="tag tag-ext">External fetch</span></td>
+          <td>Fetched from CoinGecko's public API. No personal data is sent in this request.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ── External API ───────────────────────────────────────────── -->
+  <section>
+    <h2>External API usage</h2>
+    <p>
+      The only external network request Sats makes is to <a href="https://www.coingecko.com" target="_blank" rel="noopener">CoinGecko</a>'s
+      public REST API to retrieve the current Bitcoin price in supported fiat currencies.
+    </p>
+    <p>
+      This request is made approximately every 7 minutes. It contains no user identifiers,
+      no cookies, and no data about the pages you visit. It is equivalent to any browser
+      fetching a public webpage.
+    </p>
+    <p>
+      The request URL takes the form:
+      <code>https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&amp;vs_currencies=usd,eur,mxn,…</code>
+    </p>
+    <p>
+      CoinGecko may log this request according to their own
+      <a href="https://www.coingecko.com/en/privacy" target="_blank" rel="noopener">privacy policy</a>.
+      Sats has no control over CoinGecko's logging practices.
+    </p>
+  </section>
+
+  <!-- ── Permissions ────────────────────────────────────────────── -->
+  <section>
+    <h2>Browser permissions</h2>
+    <p>Sats requests only the minimum permissions required to function:</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Permission</th>
+          <th>Why it's needed</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>storage</code></td>
+          <td>To save your display preferences (mode, currency, color) locally. No personal data is stored.</td>
+        </tr>
+        <tr>
+          <td><code>alarms</code></td>
+          <td>To schedule periodic BTC price refreshes (every ~7 minutes) without keeping a persistent connection open.</td>
+        </tr>
+        <tr>
+          <td>Host permission: <code>api.coingecko.com</code></td>
+          <td>To fetch the BTC exchange rate from CoinGecko's public API.</td>
+        </tr>
+        <tr>
+          <td>Content script: <code>&lt;all_urls&gt;</code></td>
+          <td>To detect and convert prices on any webpage you visit. Page content is processed locally and never transmitted.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>Sats does <strong>not</strong> request permissions for: <code>tabs</code>, <code>history</code>, <code>bookmarks</code>, <code>cookies</code>, <code>webRequest</code>, <code>geolocation</code>, or any camera/microphone access.</p>
+  </section>
+
+  <!-- ── Children ───────────────────────────────────────────────── -->
+  <section>
+    <h2>Children's privacy</h2>
+    <p>
+      Sats does not knowingly collect any information from children under the age of 13.
+      The extension collects no personal data from anyone, regardless of age.
+    </p>
+  </section>
+
+  <!-- ── Changes ────────────────────────────────────────────────── -->
+  <section>
+    <h2>Changes to this policy</h2>
+    <p>
+      If we ever add any data collection (which we do not plan to do), this policy will be
+      updated with at least 30 days' notice before the change takes effect, and the extension
+      version notes will highlight the change clearly.
+    </p>
+    <p>
+      The "Last updated" date at the top of this page will always reflect the most recent revision.
+    </p>
+  </section>
+
+  <hr>
+
+  <!-- ── Contact ────────────────────────────────────────────────── -->
+  <div class="contact">
+    <h2 style="margin-bottom:10px;">Contact</h2>
+    <p>
+      Questions about this privacy policy or the extension?<br>
+      Open an issue on GitHub</a>
+    </p>
+  </div>
+
+</main>
+
+</body>
+</html>

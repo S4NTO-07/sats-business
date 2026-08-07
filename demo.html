@@ -6,101 +6,129 @@
 <title>Demo — Sats for Business</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--btc:#F7931A;--bg:#f8f8f6;--white:#fff;--text:#1a1a1a;--muted:#888;--line:#e8e8e8;--green:#16a34a}
+:root{--btc:#F7931A;--btc-l:rgba(247,147,26,0.1);--btc-b:rgba(247,147,26,0.22);--bg:#f8f8f6;--white:#fff;--text:#1a1a1a;--muted:#888;--line:#e8e8e8;--green:#16a34a}
 body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:15px}
-
-/* ── Store header ── */
 .store-nav{background:var(--white);border-bottom:1px solid var(--line);padding:14px 32px;display:flex;align-items:center;justify-content:space-between}
-.store-logo{font-size:20px;font-weight:800;letter-spacing:-0.5px;color:var(--text)}
+.store-logo{font-size:20px;font-weight:800;letter-spacing:-0.5px}
 .store-logo span{color:var(--btc)}
 .store-links{display:flex;gap:24px;font-size:13px;color:var(--muted)}
 .store-cart{background:var(--text);color:#fff;border:none;border-radius:8px;padding:8px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
-
-/* ── Breadcrumb ── */
 .breadcrumb{max-width:1100px;margin:0 auto;padding:14px 32px;font-size:12px;color:var(--muted)}
-.breadcrumb a{color:var(--muted);text-decoration:none}
-
-/* ── Product layout ── */
 .product{max-width:1100px;margin:0 auto;padding:0 32px 60px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
 .product-images{position:sticky;top:80px}
 .main-img{width:100%;aspect-ratio:1;background:linear-gradient(135deg,#1a1a2e,#16213e);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:100px;margin-bottom:10px}
 .thumbs{display:flex;gap:8px}
 .thumb{width:60px;height:60px;background:#e8e8e8;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:24px;cursor:pointer;border:2px solid transparent}
 .thumb.active{border-color:var(--btc)}
-
 .product-info{}
 .product-tag{display:inline-block;background:#fef3c7;color:#92400e;font-size:11px;font-weight:700;padding:3px 8px;border-radius:4px;letter-spacing:0.5px;margin-bottom:12px}
 .product-title{font-size:26px;font-weight:700;letter-spacing:-0.5px;margin-bottom:8px;line-height:1.25}
 .product-rating{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);margin-bottom:20px}
 .stars{color:#f59e0b}
-
-.price-section{background:var(--white);border:1px solid var(--line);border-radius:12px;padding:20px;margin-bottom:20px}
+.price-section{background:var(--white);border:1px solid var(--line);border-radius:12px;padding:20px;margin-bottom:16px}
 .price-label{font-size:11px;text-transform:uppercase;letter-spacing:0.8px;color:var(--muted);margin-bottom:8px}
-.price-main{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:6px}
+.price-row{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:4px}
 .price-amount{font-size:32px;font-weight:800;letter-spacing:-0.8px}
 .price-original{font-size:16px;color:var(--muted);text-decoration:line-through}
 .price-discount{font-size:13px;font-weight:700;color:var(--green);background:#dcfce7;padding:3px 8px;border-radius:4px}
-.installments{font-size:13px;color:var(--muted);margin-top:6px}
+.installments{font-size:13px;color:var(--muted);margin-top:8px;display:flex;align-items:center;gap:6px}
 
-.variant-label{font-size:12px;font-weight:600;color:var(--text);margin-bottom:8px;margin-top:16px}
-.variants{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
-.variant{border:1px solid var(--line);border-radius:7px;padding:7px 14px;font-size:13px;cursor:pointer;transition:all .15s;background:var(--white)}
-.variant.active{border-color:var(--text);background:var(--text);color:#fff}
+/* ── Sats badge ── */
+.sats-badge{
+  display:inline-flex;align-items:center;gap:4px;
+  background:var(--btc-l);border:1px solid var(--btc-b);
+  border-radius:5px;padding:2px 9px;
+  font-size:13px;font-weight:700;color:var(--btc);
+  white-space:nowrap;font-family:inherit;
+}
 
-.qty-row{display:flex;align-items:center;gap:12px;margin-bottom:20px}
-.qty-btn{width:36px;height:36px;border:1px solid var(--line);border-radius:7px;background:var(--white);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.qty-val{font-size:16px;font-weight:600;min-width:20px;text-align:center}
+/* ── Lightning pay button ── */
+.sats-pay-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--btc);color:#fff;border:none;
+  border-radius:8px;padding:10px 18px;
+  font-size:14px;font-weight:700;cursor:pointer;
+  font-family:inherit;transition:opacity .15s;
+  margin-top:12px;width:100%;justify-content:center;
+}
+.sats-pay-btn:hover{opacity:.88}
 
-.btn-add{width:100%;background:var(--text);color:#fff;border:none;border-radius:10px;padding:16px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:10px;transition:opacity .15s}
-.btn-add:hover{opacity:.88}
+/* ── Lightning modal ── */
+.modal-overlay{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,0.75);z-index:9999;
+  align-items:center;justify-content:center;
+}
+.modal-overlay.open{display:flex}
+.modal{
+  background:#111;border:1px solid #2a2a2a;
+  border-top:3px solid var(--btc);
+  border-radius:14px;padding:32px;
+  max-width:340px;width:90%;
+  font-family:inherit;color:#f0f0f0;
+  text-align:center;
+}
+.modal-title{font-size:15px;font-weight:700;color:var(--btc);margin-bottom:20px}
+.modal-sats{font-size:32px;font-weight:800;color:var(--btc);letter-spacing:-0.8px}
+.modal-fiat{font-size:13px;color:#666;margin-top:4px;margin-bottom:20px}
+.modal-qr{
+  width:180px;height:180px;background:#fff;
+  border-radius:10px;margin:0 auto 16px;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+.modal-qr img{width:100%;height:100%}
+.modal-addr{font-size:11px;color:#555;font-family:monospace;word-break:break-all;margin-bottom:20px}
+.modal-close{
+  width:100%;background:#1a1a1a;border:1px solid #2a2a2a;
+  color:#777;border-radius:8px;padding:11px;
+  font-size:13px;cursor:pointer;font-family:inherit;
+  transition:all .15s;
+}
+.modal-close:hover{border-color:var(--btc);color:var(--btc)}
 
-.features{margin-top:24px;display:flex;flex-direction:column;gap:8px}
-.feat{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)}
-.feat-icon{font-size:16px}
-
-/* ── Sats banner ── */
 .sats-banner{background:linear-gradient(135deg,#0a0a0a,#1a1208);border-radius:12px;padding:16px 20px;margin-bottom:16px;display:flex;align-items:center;gap:12px}
 .sats-banner-icon{font-size:24px}
-.sats-banner-text{font-size:13px;color:#888}
-.sats-banner-text strong{color:#F7931A;font-size:15px;display:block;margin-bottom:2px}
-
-/* ── Related ── */
+.sats-banner-text strong{color:#F7931A;font-size:14px;display:block;margin-bottom:2px}
+.sats-banner-text{font-size:12px;color:#888}
+.variant-label{font-size:12px;font-weight:600;margin-bottom:8px;margin-top:16px}
+.variants{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.variant{border:1px solid var(--line);border-radius:7px;padding:7px 14px;font-size:13px;cursor:pointer;background:var(--white)}
+.variant.active{border-color:var(--text);background:var(--text);color:#fff}
+.btn-add{width:100%;background:var(--text);color:#fff;border:none;border-radius:10px;padding:16px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:10px}
+.feats{margin-top:20px;display:flex;flex-direction:column;gap:8px}
+.feat{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)}
 .related{max-width:1100px;margin:0 auto;padding:0 32px 60px}
 .related h2{font-size:20px;font-weight:700;margin-bottom:20px;letter-spacing:-0.3px}
 .related-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-.related-card{background:var(--white);border:1px solid var(--line);border-radius:10px;padding:14px;cursor:pointer;transition:box-shadow .15s}
-.related-card:hover{box-shadow:0 4px 12px rgba(0,0,0,0.08)}
+.related-card{background:var(--white);border:1px solid var(--line);border-radius:10px;padding:14px;cursor:pointer}
 .related-img{width:100%;aspect-ratio:1;background:#f0f0f0;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:32px;margin-bottom:10px}
 .related-name{font-size:13px;font-weight:500;margin-bottom:6px;line-height:1.4;height:36px;overflow:hidden}
+.related-price-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 .related-price{font-size:15px;font-weight:700}
-
-/* ── Powered by ── */
-.powered{text-align:center;padding:20px;font-size:11px;color:#ccc}
+.powered{text-align:center;padding:20px;font-size:11px;color:#bbb}
 .powered a{color:var(--btc);text-decoration:none;font-weight:600}
-
-@media(max-width:768px){
-  .product{grid-template-columns:1fr;gap:24px}
-  .product-images{position:static}
-  .related-grid{grid-template-columns:repeat(2,1fr)}
-}
+.loading-bar{background:var(--btc-l);border-bottom:2px solid var(--btc);padding:8px 32px;font-size:12px;color:var(--btc);font-weight:600;display:flex;align-items:center;gap:8px}
+@media(max-width:768px){.product{grid-template-columns:1fr;gap:24px}.product-images{position:static}.related-grid{grid-template-columns:repeat(2,1fr)}.store-links{display:none}}
 </style>
 </head>
 <body>
 
-<!-- Fake store header -->
+<!-- Loading indicator -->
+<div class="loading-bar" id="loadingBar">
+  <span>⚡</span> <span id="loadingText">Cargando precio de Bitcoin...</span>
+</div>
+
 <nav class="store-nav">
   <div class="store-logo">mi<span>tienda</span>.mx</div>
-  <div class="store-links">
-    <span>Inicio</span><span>Catálogo</span><span>Nosotros</span>
-  </div>
+  <div class="store-links"><span>Inicio</span><span>Catálogo</span><span>Nosotros</span></div>
   <button class="store-cart">🛒 Carrito (2)</button>
 </nav>
 
 <div class="breadcrumb">
-  <a href="#">Inicio</a> › <a href="#">Electrónicos</a> › <a href="#">Auriculares</a> › AirPods Pro
+  <a href="#">Inicio</a> › <a href="#">Electrónicos</a> › AirPods Pro
 </div>
 
-<!-- Product -->
 <div class="product">
   <div class="product-images">
     <div class="main-img">🎧</div>
@@ -119,18 +147,26 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSy
       <span>4.9 · 2,847 reseñas</span>
     </div>
 
-    <!-- PRICE SECTION — widget injects badge here -->
     <div class="price-section">
       <div class="price-label">Precio</div>
-      <div class="price-main">
-        <span class="price-amount" data-sats-price="4299">$4,299</span>
+      <div class="price-row">
+        <span class="price-amount">$4,299</span>
         <span class="price-original">$5,499</span>
         <span class="price-discount">22% OFF</span>
       </div>
-      <div class="installments">o 12 MSI desde <span data-sats-price="358">$358</span>/mes</div>
+      <!-- Sats badge injected here -->
+      <div id="badge-main" style="margin-top:8px"></div>
+      <div class="installments">
+        o 12 MSI desde <strong>$358</strong>/mes
+        <span id="badge-install"></span>
+      </div>
+
+      <!-- Lightning pay button -->
+      <button class="sats-pay-btn" id="payBtn">
+        ⚡ Pagar con Lightning
+      </button>
     </div>
 
-    <!-- Sats info banner -->
     <div class="sats-banner">
       <div class="sats-banner-icon">₿</div>
       <div class="sats-banner-text">
@@ -145,47 +181,51 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSy
       <div class="variant">Negro</div>
     </div>
 
-    <div class="variant-label">Cantidad</div>
-    <div class="qty-row">
-      <button class="qty-btn">−</button>
-      <span class="qty-val">1</span>
-      <button class="qty-btn">+</button>
-    </div>
-
     <button class="btn-add">Agregar al carrito</button>
 
-    <div class="features">
-      <div class="feat"><span class="feat-icon">🚚</span>Envío gratis en 24-48 hrs</div>
-      <div class="feat"><span class="feat-icon">↩️</span>Devoluciones gratis en 30 días</div>
-      <div class="feat"><span class="feat-icon">🔒</span>Pago seguro — Bitcoin Lightning disponible</div>
-      <div class="feat"><span class="feat-icon">✅</span>Producto original con garantía Apple</div>
+    <div class="feats">
+      <div class="feat">🚚 Envío gratis en 24-48 hrs</div>
+      <div class="feat">↩️ Devoluciones gratis en 30 días</div>
+      <div class="feat">🔒 Pago seguro — Bitcoin Lightning disponible</div>
+      <div class="feat">✅ Producto original con garantía Apple</div>
     </div>
   </div>
 </div>
 
-<!-- Related products -->
 <div class="related">
   <h2>También te puede interesar</h2>
   <div class="related-grid">
     <div class="related-card">
       <div class="related-img">📱</div>
-      <div class="related-name">iPhone 16 Pro 256GB Titanio</div>
-      <div class="related-price" data-sats-price="24999">$24,999</div>
+      <div class="related-name">iPhone 16 Pro 256GB</div>
+      <div class="related-price-row">
+        <span class="related-price">$24,999</span>
+        <span class="sats-badge" id="r1">…</span>
+      </div>
     </div>
     <div class="related-card">
       <div class="related-img">⌚</div>
       <div class="related-name">Apple Watch Series 10</div>
-      <div class="related-price" data-sats-price="8499">$8,499</div>
+      <div class="related-price-row">
+        <span class="related-price">$8,499</span>
+        <span class="sats-badge" id="r2">…</span>
+      </div>
     </div>
     <div class="related-card">
       <div class="related-img">💻</div>
       <div class="related-name">MacBook Air M3 13"</div>
-      <div class="related-price" data-sats-price="29999">$29,999</div>
+      <div class="related-price-row">
+        <span class="related-price">$29,999</span>
+        <span class="sats-badge" id="r3">…</span>
+      </div>
     </div>
     <div class="related-card">
       <div class="related-img">🎵</div>
       <div class="related-name">HomePod mini</div>
-      <div class="related-price" data-sats-price="2299">$2,299</div>
+      <div class="related-price-row">
+        <span class="related-price">$2,299</span>
+        <span class="sats-badge" id="r4">…</span>
+      </div>
     </div>
   </div>
 </div>
@@ -194,13 +234,105 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSy
   Precios en Bitcoin por <a href="index.html">Sats for Business</a> ⚡
 </div>
 
-<!-- THE WIDGET — one line of code -->
-<script
-  src="sats-widget.js"
-  data-currency="MXN"
-  data-lightning="costlycredit50@walletofsatoshi.com"
-  data-lang="es">
-</script>
+<!-- Lightning modal -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <div class="modal-title">⚡ Pagar con Lightning</div>
+    <div class="modal-sats" id="m-sats"></div>
+    <div class="modal-fiat" id="m-fiat"></div>
+    <div class="modal-qr">
+      <img id="m-qr" src="" alt="Lightning QR"/>
+    </div>
+    <div class="modal-addr">costlycredit50@walletofsatoshi.com</div>
+    <button class="modal-close" onclick="closeModal()">Cerrar</button>
+  </div>
+</div>
 
+<script>
+var LIGHTNING = 'costlycredit50@walletofsatoshi.com';
+var btcRate   = null;
+
+var PRICES = {
+  main:    4299,
+  install: 358,
+  r1:      24999,
+  r2:      8499,
+  r3:      29999,
+  r4:      2299,
+};
+
+function fmt(sats) {
+  if (sats >= 1000000) return (sats/1000000).toFixed(1) + 'M sats';
+  if (sats >= 10000)   return Math.round(sats/1000) + 'k sats';
+  return sats.toLocaleString() + ' sats';
+}
+
+function toSats(mxn) {
+  return Math.round((mxn / btcRate) * 100000000);
+}
+
+function renderBadge(elId, amount) {
+  var el = document.getElementById(elId);
+  if (!el) return;
+  el.textContent = '~' + fmt(toSats(amount));
+}
+
+function renderAll() {
+  document.getElementById('badge-main').innerHTML =
+    '<span class="sats-badge">~' + fmt(toSats(PRICES.main)) + '</span>';
+  document.getElementById('badge-install').innerHTML =
+    '<span class="sats-badge" style="font-size:11px">~' + fmt(toSats(PRICES.install)) + '</span>';
+  renderBadge('r1', PRICES.r1);
+  renderBadge('r2', PRICES.r2);
+  renderBadge('r3', PRICES.r3);
+  renderBadge('r4', PRICES.r4);
+
+  var bar = document.getElementById('loadingBar');
+  bar.innerHTML = '⚡ 1 BTC = $' + Math.round(btcRate).toLocaleString('es-MX') +
+                  ' MXN · Actualizado hace un momento';
+  bar.style.background = 'rgba(247,147,26,0.06)';
+}
+
+// Fetch live rate
+fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=mxn')
+  .then(function(r) { return r.json(); })
+  .then(function(d) {
+    if (d && d.bitcoin && d.bitcoin.mxn) {
+      btcRate = d.bitcoin.mxn;
+    } else {
+      btcRate = 2500000; // fallback
+    }
+    renderAll();
+  })
+  .catch(function() {
+    btcRate = 2500000; // fallback if no internet
+    document.getElementById('loadingBar').textContent =
+      '⚡ Modo demo — precio estimado $2,500,000 MXN/BTC';
+    renderAll();
+  });
+
+// Lightning modal
+document.getElementById('payBtn').addEventListener('click', function() {
+  if (!btcRate) return;
+  var sats = toSats(PRICES.main);
+  document.getElementById('m-sats').textContent = fmt(sats);
+  document.getElementById('m-fiat').textContent = '$4,299 MXN';
+  var lnurl = 'lightning:' + LIGHTNING;
+  document.getElementById('m-qr').src =
+    'https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=' +
+    encodeURIComponent(lnurl);
+  document.getElementById('modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+});
+
+document.getElementById('modal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+</script>
 </body>
 </html>

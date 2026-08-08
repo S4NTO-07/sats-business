@@ -24,12 +24,13 @@
     document.querySelector('script[src*="sats-widget"]');
 
   var CONFIG = {
-    currency:  (scriptTag && scriptTag.getAttribute('data-currency'))  || 'AUTO',
-    color:     (scriptTag && scriptTag.getAttribute('data-color'))     || '#F7931A',
-    mode:      (scriptTag && scriptTag.getAttribute('data-mode'))      || 'append',
-    lightning: (scriptTag && scriptTag.getAttribute('data-lightning')) || '',
-    lang:      (scriptTag && scriptTag.getAttribute('data-lang'))      || 
-               (navigator.language || 'es').toLowerCase().startsWith('en') ? 'en' : 'es',
+    currency:    (scriptTag && scriptTag.getAttribute('data-currency'))    || 'AUTO',
+    color:       (scriptTag && scriptTag.getAttribute('data-color'))       || '#F7931A',
+    mode:        (scriptTag && scriptTag.getAttribute('data-mode'))        || 'append',
+    lightning:   (scriptTag && scriptTag.getAttribute('data-lightning'))   || '',
+    lang:        (scriptTag && scriptTag.getAttribute('data-lang'))        || 
+                 (navigator.language || 'es').toLowerCase().startsWith('en') ? 'en' : 'es',
+    denomination:(scriptTag && scriptTag.getAttribute('data-denomination'))|| 'sats',
   };
 
   // ── Strings ───────────────────────────────────────────────────
@@ -119,6 +120,23 @@
     if (sats >= 1000000) return (sats / 1000000).toFixed(1) + 'M ' + T.sats;
     if (sats >= 10000)   return Math.round(sats / 1000) + 'k ' + T.sats;
     return sats.toLocaleString() + ' ' + T.sats;
+  }
+
+  function formatBtc(amount) {
+    var btc = amount / btcRate;
+    if (btc >= 0.1)    return '₿' + btc.toFixed(3);
+    if (btc >= 0.01)   return '₿' + btc.toFixed(4);
+    if (btc >= 0.001)  return '₿' + btc.toFixed(5);
+    if (btc >= 0.0001) return '₿' + btc.toFixed(6);
+    return '₿' + btc.toFixed(8);
+  }
+
+  function formatLabel(amount) {
+    var sats  = toSats(amount);
+    var denom = CONFIG.denomination;
+    if (denom === 'btc')  return formatBtc(amount);
+    if (denom === 'both') return '~' + formatSats(sats) + ' / ' + formatBtc(amount);
+    return '~' + formatSats(sats); // default: sats
   }
 
   function parseAmount(str) {
@@ -240,14 +258,15 @@
   }
 
   // ── Create badge + pay button ─────────────────────────────────
-  function makeBadge(sats, fiatText) {
+  function makeBadge(amount, fiatText) {
+    var sats = toSats(amount);
     var wrap = document.createElement('span');
     wrap.setAttribute('data-sats-done', '1');
 
     // Sats badge
     var badge = document.createElement('span');
     badge.className   = 'sats-badge';
-    badge.textContent = '~' + formatSats(sats);
+    badge.textContent = formatLabel(amount);
     wrap.appendChild(badge);
 
     // Lightning pay button (only if merchant has Lightning address)
@@ -281,7 +300,7 @@
 
     var fiat  = el.textContent.trim();
     processed.add(el);
-    el.parentNode.insertBefore(makeBadge(sats, fiat), el.nextSibling);
+    el.parentNode.insertBefore(makeBadge(amount, fiat), el.nextSibling);
   }
 
   // ── Auto-detect prices in text nodes ─────────────────────────
@@ -330,8 +349,7 @@
         frag.appendChild(document.createTextNode(text.slice(last, match.index)));
       }
       frag.appendChild(document.createTextNode(match.full));
-      var sats = toSats(match.amount);
-      if (sats) frag.appendChild(makeBadge(sats, match.full));
+      if (toSats(match.amount)) frag.appendChild(makeBadge(match.amount, match.full));
       last = match.end;
     });
 

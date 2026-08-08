@@ -119,6 +119,17 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSy
   <span>⚡</span> <span id="loadingText">Cargando precio de Bitcoin...</span>
 </div>
 
+<!-- Denomination switcher — for demo only -->
+<div style="background:#1a1a1a;border-bottom:1px solid #2a2a2a;padding:10px 32px;display:flex;align-items:center;gap:12px">
+  <span style="font-size:12px;color:#666;font-weight:600">Sats for Business demo:</span>
+  <div style="display:flex;gap:6px">
+    <button onclick="setDenom('sats')"  id="d-sats" style="background:#F7931A;color:#fff;border:none;border-radius:6px;padding:5px 12px;font-size:12px;font-weight:700;cursor:pointer">⚡ sats</button>
+    <button onclick="setDenom('btc')"   id="d-btc"  style="background:#222;color:#888;border:1px solid #333;border-radius:6px;padding:5px 12px;font-size:12px;font-weight:700;cursor:pointer">₿ BTC</button>
+    <button onclick="setDenom('both')"  id="d-both" style="background:#222;color:#888;border:1px solid #333;border-radius:6px;padding:5px 12px;font-size:12px;font-weight:700;cursor:pointer">+ Both</button>
+  </div>
+  <span style="font-size:11px;color:#444;margin-left:8px">Así ve el cliente los precios</span>
+</div>
+
 <nav class="store-nav">
   <div class="store-logo">mi<span>tienda</span>.mx</div>
   <div class="store-links"><span>Inicio</span><span>Catálogo</span><span>Nosotros</span></div>
@@ -278,15 +289,7 @@ function renderBadge(elId, amount) {
 }
 
 function renderAll() {
-  document.getElementById('badge-main').innerHTML =
-    '<span class="sats-badge">~' + fmt(toSats(PRICES.main)) + '</span>';
-  document.getElementById('badge-install').innerHTML =
-    '<span class="sats-badge" style="font-size:11px">~' + fmt(toSats(PRICES.install)) + '</span>';
-  renderBadge('r1', PRICES.r1);
-  renderBadge('r2', PRICES.r2);
-  renderBadge('r3', PRICES.r3);
-  renderBadge('r4', PRICES.r4);
-
+  refreshBadges();
   var bar = document.getElementById('loadingBar');
   bar.innerHTML = '⚡ 1 BTC = $' + Math.round(btcRate).toLocaleString('es-MX') +
                   ' MXN · Actualizado hace un momento';
@@ -332,6 +335,61 @@ document.getElementById('modal').addEventListener('click', function(e) {
 function closeModal() {
   document.getElementById('modal').classList.remove('open');
   document.body.style.overflow = '';
+}
+
+// Denomination switcher
+var currentDenom = 'sats';
+
+function setDenom(denom) {
+  currentDenom = denom;
+
+  // Update buttons
+  var btns = { sats: 'd-sats', btc: 'd-btc', both: 'd-both' };
+  Object.keys(btns).forEach(function(k) {
+    var btn = document.getElementById(btns[k]);
+    if (k === denom) {
+      btn.style.background = '#F7931A';
+      btn.style.color = '#fff';
+      btn.style.border = 'none';
+    } else {
+      btn.style.background = '#222';
+      btn.style.color = '#888';
+      btn.style.border = '1px solid #333';
+    }
+  });
+
+  if (!btcRate) return;
+  refreshBadges();
+}
+
+function formatBtcLabel(amount) {
+  var btc = amount / btcRate;
+  if (btc >= 0.1)    return '₿' + btc.toFixed(3);
+  if (btc >= 0.01)   return '₿' + btc.toFixed(4);
+  if (btc >= 0.001)  return '₿' + btc.toFixed(5);
+  if (btc >= 0.0001) return '₿' + btc.toFixed(6);
+  return '₿' + btc.toFixed(8);
+}
+
+function getLabel(amount) {
+  var sats  = Math.round((amount / btcRate) * 1e8);
+  var satsStr = fmt(sats);
+  var btcStr  = formatBtcLabel(amount);
+  if (currentDenom === 'btc')  return btcStr;
+  if (currentDenom === 'both') return '~' + satsStr + ' / ' + btcStr;
+  return '~' + satsStr;
+}
+
+function refreshBadges() {
+  document.getElementById('badge-main').innerHTML =
+    '<span class="sats-badge">' + getLabel(PRICES.main) + '</span>';
+  document.getElementById('badge-install').innerHTML =
+    '<span class="sats-badge" style="font-size:11px">' + getLabel(PRICES.install) + '</span>';
+  ['r1','r2','r3','r4'].forEach(function(id, i) {
+    var amounts = [PRICES.r1, PRICES.r2, PRICES.r3, PRICES.r4];
+    var el = document.getElementById(id);
+    if (el) el.textContent = getLabel(amounts[i]);
+  });
 }
 </script>
 </body>

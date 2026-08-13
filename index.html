@@ -4,6 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Sats for Business — Muestra tus precios en Bitcoin</title>
+<meta name="sats-ignore" content="true"/>
 <meta name="description" content="Widget gratis que muestra tus precios en satoshis. Para tiendas físicas, e-commerce y empresas."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
@@ -201,7 +202,7 @@ footer{border-top:1px solid var(--line);padding:28px 40px;display:flex;align-ite
   <div class="plans">
     <div class="plan">
       <h3 id="l-p1-name">Piloto</h3>
-      <div class="plan-price">$0 <span id="l-p1-period">/ mes · 3 meses</span></div>
+      <div class="plan-price" data-sats-done="1">$0 <span id="l-p1-period">/ mes · 3 meses</span></div>
       <div class="plan-desc" id="l-p1-desc">Para los primeros 10 negocios. Instalación asistida incluida.</div>
       <ul class="feats">
         <li id="l-p1-f1">Widget en tu sitio web</li>
@@ -213,7 +214,7 @@ footer{border-top:1px solid var(--line);padding:28px 40px;display:flex;align-ite
     <div class="plan hot">
       <div class="plan-tag" id="l-popular">MÁS POPULAR</div>
       <h3 id="l-p2-name">Negocio</h3>
-      <div class="plan-price">$500 <span>MXN / mes</span></div>
+      <div class="plan-price" data-sats-done="1">$500 <span>MXN / mes</span></div>
       <div class="plan-desc" id="l-p2-desc">Para tiendas físicas y e-commerce.</div>
       <ul class="feats">
         <li id="l-p2-f1">Todo lo del plan Piloto</li>
@@ -224,7 +225,7 @@ footer{border-top:1px solid var(--line);padding:28px 40px;display:flex;align-ite
     </div>
     <div class="plan">
       <h3 id="l-p3-name">Empresa</h3>
-      <div class="plan-price">$3,000 <span>MXN / mes</span></div>
+      <div class="plan-price" data-sats-done="1">$3,000 <span>MXN / mes</span></div>
       <div class="plan-desc" id="l-p3-desc">Para distribuidoras y empresas con volumen.</div>
       <ul class="feats">
         <li id="l-p3-f1">Todo lo del plan Negocio</li>

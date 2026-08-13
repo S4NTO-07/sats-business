@@ -37,10 +37,14 @@
   var STR = {
     es: { pay: 'Pagar con ⚡ Lightning', sats: 'sats', close: 'Cerrar',
           scanning: 'Escaneando QR con tu wallet Lightning',
-          amount: 'Monto', address: 'Dirección Lightning' },
+          amount: 'Monto', address: 'Dirección Lightning',
+          noWallet: '¿No tienes wallet Lightning?',
+          getOne: 'Descarga una gratis:' },
     en: { pay: 'Pay with ⚡ Lightning', sats: 'sats', close: 'Close',
           scanning: 'Scan QR with your Lightning wallet',
-          amount: 'Amount', address: 'Lightning address' },
+          amount: 'Amount', address: 'Lightning address',
+          noWallet: "Don't have a Lightning wallet?",
+          getOne: 'Get one free:' },
   };
   var T = STR[CONFIG.lang] || STR.es;
 
@@ -202,6 +206,14 @@
         'padding:10px;font-size:13px;cursor:pointer;',
         'font-family:inherit;transition:all .15s}',
       '.sats-modal-close:hover{border-color:' + c + ';color:' + c + '}',
+      '.sats-wallet-section{margin-top:16px;padding-top:14px;border-top:1px solid #2a2a2a}',
+      '.sats-wallet-label{font-size:11px;color:#555;text-align:center;margin-bottom:4px}',
+      '.sats-wallet-btns{display:flex;flex-direction:column;gap:7px}',
+      '.sats-wallet-btn{display:flex;align-items:center;gap:10px;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:8px;padding:9px 12px;text-decoration:none;color:#ccc;transition:border-color .15s;cursor:pointer}',
+      '.sats-wallet-btn:hover{border-color:' + c + ';color:#fff}',
+      '.sats-wallet-icon{font-size:16px;flex-shrink:0}',
+      '.sats-wallet-name{font-size:13px;font-weight:600;flex:1}',
+      '.sats-wallet-tag{font-size:10px;color:#555;background:#111;border:1px solid #222;border-radius:4px;padding:2px 6px;white-space:nowrap}',
     ].join('');
     document.head.appendChild(style);
   }
@@ -223,6 +235,27 @@
         '</div>',
         '<div class="sats-lightning-addr" id="sats-m-addr"></div>',
         '<button class="sats-modal-close" id="sats-m-close">' + T.close + '</button>',
+        '<div class="sats-wallet-section">',
+          '<div class="sats-wallet-label">' + (T.noWallet || "Don\'t have a Lightning wallet?") + '</div>',
+          '<div class="sats-wallet-label" style="margin-bottom:8px">' + (T.getOne || "Get one free:") + '</div>',
+          '<div class="sats-wallet-btns">',
+            '<a class="sats-wallet-btn" href="https://www.walletofsatoshi.com" target="_blank" rel="noopener">',
+              '<span class="sats-wallet-icon">🟠</span>',
+              '<span class="sats-wallet-name">Wallet of Satoshi</span>',
+              '<span class="sats-wallet-tag">Beginner</span>',
+            '</a>',
+            '<a class="sats-wallet-btn" href="https://strike.me" target="_blank" rel="noopener">',
+              '<span class="sats-wallet-icon">⚡</span>',
+              '<span class="sats-wallet-name">Strike</span>',
+              '<span class="sats-wallet-tag">Mexico / US</span>',
+            '</a>',
+            '<a class="sats-wallet-btn" href="https://muun.com" target="_blank" rel="noopener">',
+              '<span class="sats-wallet-icon">🔒</span>',
+              '<span class="sats-wallet-name">Muun</span>',
+              '<span class="sats-wallet-tag">Self-custody</span>',
+            '</a>',
+          '</div>',
+        '</div>',
       '</div>'
     ].join('');
     document.body.appendChild(modalEl);

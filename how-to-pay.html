@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>How to Pay with Bitcoin Lightning</title>
+<meta name="description" content="Get a free Lightning wallet and pay with Bitcoin in seconds. Step by step guide."/>
+<meta name="sats-ignore" content="true"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --btc:#F7931A;--btc-l:rgba(247,147,26,0.1);--btc-b:rgba(247,147,26,0.22);
+  --bg:#0a0a0a;--bg2:#141414;--bg3:#1c1c1c;--line:#252525;
+  --text:#f2f2f2;--muted:#777;--green:#22c55e;--green-l:rgba(34,197,94,0.1);
+}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:15px;line-height:1.6;min-height:100vh}
+
+/* ── Header ── */
+header{text-align:center;padding:52px 24px 40px;border-bottom:1px solid var(--line)}
+.logo{width:52px;height:52px;background:var(--btc);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:900;color:#fff;margin:0 auto 18px;box-shadow:0 4px 20px rgba(247,147,26,0.3)}
+header h1{font-size:clamp(26px,5vw,38px);font-weight:800;letter-spacing:-0.8px;margin-bottom:10px}
+header h1 em{font-style:normal;color:var(--btc)}
+header p{font-size:16px;color:var(--muted);max-width:480px;margin:0 auto}
+
+/* ── Lang toggle ── */
+.lang-row{display:flex;justify-content:center;gap:8px;padding:20px 24px 0}
+.lang-btn{background:var(--bg3);border:1px solid var(--line);color:var(--muted);border-radius:6px;padding:6px 14px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .15s}
+.lang-btn.active{background:var(--btc);border-color:var(--btc);color:#fff}
+
+/* ── Main ── */
+main{max-width:640px;margin:0 auto;padding:48px 24px 80px}
+
+/* ── Section label ── */
+.sec-lbl{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:14px}
+
+/* ── Wallets ── */
+.wallets{display:flex;flex-direction:column;gap:12px;margin-bottom:48px}
+.wallet-card{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:20px;display:flex;gap:16px;align-items:flex-start;transition:border-color .15s}
+.wallet-card:hover{border-color:var(--btc)}
+.wallet-icon{font-size:32px;flex-shrink:0;width:52px;height:52px;background:var(--bg3);border-radius:12px;display:flex;align-items:center;justify-content:center}
+.wallet-info{flex:1;min-width:0}
+.wallet-header{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px}
+.wallet-name{font-size:17px;font-weight:700}
+.wallet-badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;letter-spacing:0.3px}
+.badge-beginner{background:var(--green-l);color:var(--green)}
+.badge-latam{background:var(--btc-l);color:var(--btc)}
+.badge-advanced{background:rgba(139,92,246,0.12);color:#a78bfa}
+.wallet-desc{font-size:13px;color:var(--muted);margin-bottom:12px;line-height:1.5}
+.wallet-features{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.feat-chip{font-size:11px;background:var(--bg3);border:1px solid var(--line);border-radius:5px;padding:3px 8px;color:var(--muted)}
+.wallet-links{display:flex;gap:8px;flex-wrap:wrap}
+.dl-btn{display:inline-flex;align-items:center;gap:5px;background:var(--bg3);border:1px solid var(--line);color:var(--text);border-radius:7px;padding:7px 14px;font-size:12px;font-weight:600;text-decoration:none;transition:all .15s}
+.dl-btn:hover{border-color:var(--btc);color:var(--btc)}
+.dl-btn-primary{background:var(--btc);border-color:var(--btc);color:#fff}
+.dl-btn-primary:hover{opacity:.88;color:#fff}
+
+/* ── Steps ── */
+.steps{display:flex;flex-direction:column;gap:0;margin-bottom:48px;position:relative}
+.steps::before{content:'';position:absolute;left:19px;top:20px;bottom:20px;width:2px;background:var(--line);z-index:0}
+.step{display:flex;gap:16px;align-items:flex-start;position:relative;z-index:1;padding-bottom:24px}
+.step:last-child{padding-bottom:0}
+.step-num{width:40px;height:40px;background:var(--btc);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:#fff;flex-shrink:0}
+.step-body{flex:1;padding-top:8px}
+.step-title{font-size:15px;font-weight:700;margin-bottom:4px}
+.step-desc{font-size:13px;color:var(--muted);line-height:1.6}
+.step-tip{background:var(--btc-l);border:1px solid var(--btc-b);border-radius:8px;padding:10px 12px;font-size:12px;color:var(--btc);margin-top:10px;font-weight:500}
+
+/* ── FAQ ── */
+.faq{display:flex;flex-direction:column;gap:2px;margin-bottom:48px}
+.faq-item{background:var(--bg2);border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-bottom:6px}
+.faq-q{padding:14px 16px;font-size:14px;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:color .15s;user-select:none}
+.faq-q:hover{color:var(--btc)}
+.faq-icon{font-size:16px;color:var(--muted);transition:transform .2s;flex-shrink:0}
+.faq-a{font-size:13px;color:var(--muted);line-height:1.6;max-height:0;overflow:hidden;transition:max-height .25s ease,padding .25s}
+.faq-item.open .faq-a{max-height:200px;padding:0 16px 14px}
+.faq-item.open .faq-icon{transform:rotate(45deg)}
+
+/* ── Bottom CTA ── */
+.bottom-cta{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:28px;text-align:center}
+.bottom-cta h2{font-size:20px;font-weight:700;margin-bottom:8px;letter-spacing:-0.3px}
+.bottom-cta p{font-size:14px;color:var(--muted);margin-bottom:20px}
+.cta-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.cta-btn{display:inline-flex;align-items:center;gap:6px;background:var(--btc);color:#fff;border:none;border-radius:9px;padding:12px 22px;font-size:14px;font-weight:700;text-decoration:none;transition:opacity .15s}
+.cta-btn:hover{opacity:.88}
+.cta-btn-sec{background:var(--bg3);border:1px solid var(--line);color:var(--text)}
+.cta-btn-sec:hover{border-color:var(--muted);opacity:1}
+
+/* ── Footer ── */
+footer{text-align:center;padding:24px;font-size:12px;color:var(--muted);border-top:1px solid var(--line)}
+footer a{color:var(--btc);text-decoration:none}
+
+@media(max-width:480px){
+  .wallet-card{flex-direction:column;gap:12px}
+  .wallet-icon{width:40px;height:40px;font-size:22px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">₿</div>
+  <h1 id="h-title">How to pay with <em>Bitcoin Lightning</em></h1>
+  <p id="h-sub">Fast, free, and borderless. Set up your wallet in 2 minutes.</p>
+</header>
+
+<div class="lang-row">
+  <button class="lang-btn active" onclick="setLang('en')">English</button>
+  <button class="lang-btn" onclick="setLang('es')">Español</button>
+</div>
+
+<main>
+
+  <!-- Wallets -->
+  <div class="sec-lbl" id="l-wallets-lbl">Step 1 — Choose a wallet</div>
+  <div class="wallets">
+
+    <!-- Wallet of Satoshi -->
+    <div class="wallet-card">
+      <div class="wallet-icon">🟠</div>
+      <div class="wallet-info">
+        <div class="wallet-header">
+          <span class="wallet-name">Wallet of Satoshi</span>
+          <span class="wallet-badge badge-beginner" id="l-wos-badge">⭐ Best for beginners</span>
+        </div>
+        <div class="wallet-desc" id="l-wos-desc">The simplest Lightning wallet. Download, open, and you're ready to receive and send sats in under 2 minutes. No technical knowledge required.</div>
+        <div class="wallet-features">
+          <span class="feat-chip" id="l-wos-f1">✓ No setup</span>
+          <span class="feat-chip" id="l-wos-f2">✓ Free</span>
+          <span class="feat-chip" id="l-wos-f3">✓ iOS & Android</span>
+          <span class="feat-chip" id="l-wos-f4">✓ Lightning address included</span>
+        </div>
+        <div class="wallet-links">
+          <a class="dl-btn dl-btn-primary" href="https://apps.apple.com/app/wallet-of-satoshi/id1438599608" target="_blank" rel="noopener">📱 App Store</a>
+          <a class="dl-btn" href="https://play.google.com/store/apps/details?id=com.livingroomofsatoshi.wallet" target="_blank" rel="noopener">🤖 Google Play</a>
+          <a class="dl-btn" href="https://www.walletofsatoshi.com" target="_blank" rel="noopener">🌐 Website</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Strike -->
+    <div class="wallet-card">
+      <div class="wallet-icon">⚡</div>
+      <div class="wallet-info">
+        <div class="wallet-header">
+          <span class="wallet-name">Strike</span>
+          <span class="wallet-badge badge-latam" id="l-strike-badge">🇲🇽 Great for Mexico & US</span>
+        </div>
+        <div class="wallet-desc" id="l-strike-desc">Best option if you're in Mexico or the US. Connect your bank account to buy sats with pesos or dollars. Send money internationally for free.</div>
+        <div class="wallet-features">
+          <span class="feat-chip" id="l-strike-f1">✓ Bank integration</span>
+          <span class="feat-chip" id="l-strike-f2">✓ Buy with MXN / USD</span>
+          <span class="feat-chip" id="l-strike-f3">✓ Free transfers</span>
+          <span class="feat-chip" id="l-strike-f4">✓ iOS & Android</span>
+        </div>
+        <div class="wallet-links">
+          <a class="dl-btn dl-btn-primary" href="https://apps.apple.com/app/strike-bitcoin-payments/id1488724463" target="_blank" rel="noopener">📱 App Store</a>
+          <a class="dl-btn" href="https://play.google.com/store/apps/details?id=zap.brannigan.strike" target="_blank" rel="noopener">🤖 Google Play</a>
+          <a class="dl-btn" href="https://strike.me" target="_blank" rel="noopener">🌐 Website</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Muun -->
+    <div class="wallet-card">
+      <div class="wallet-icon">🔒</div>
+      <div class="wallet-info">
+        <div class="wallet-header">
+          <span class="wallet-name">Muun</span>
+          <span class="wallet-badge badge-advanced" id="l-muun-badge">🛡️ Self-custody</span>
+        </div>
+        <div class="wallet-desc" id="l-muun-desc">For those who want full control of their Bitcoin. No company holds your funds. Open source and audited. Supports both Lightning and on-chain.</div>
+        <div class="wallet-features">
+          <span class="feat-chip" id="l-muun-f1">✓ Self-custody</span>
+          <span class="feat-chip" id="l-muun-f2">✓ No KYC</span>
+          <span class="feat-chip" id="l-muun-f3">✓ Open source</span>
+          <span class="feat-chip" id="l-muun-f4">✓ Lightning + on-chain</span>
+        </div>
+        <div class="wallet-links">
+          <a class="dl-btn dl-btn-primary" href="https://apps.apple.com/app/muun-wallet/id1482404697" target="_blank" rel="noopener">📱 App Store</a>
+          <a class="dl-btn" href="https://play.google.com/store/apps/details?id=io.muun.apollo" target="_blank" rel="noopener">🤖 Google Play</a>
+          <a class="dl-btn" href="https://muun.com" target="_blank" rel="noopener">🌐 Website</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Steps -->
+  <div class="sec-lbl" id="l-steps-lbl">Step 2 — Make your first payment</div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title" id="l-step1-t">Download a wallet</div>
+        <div class="step-desc" id="l-step1-d">Pick one from the list above. Wallet of Satoshi is recommended if this is your first time.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title" id="l-step2-t">Add some sats</div>
+        <div class="step-desc" id="l-step2-d">Buy Bitcoin directly in the app with your card or bank account. You can start with as little as $50 MXN.</div>
+        <div class="step-tip" id="l-step2-tip">💡 Tip: Only buy what you need for now. You can always add more later.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title" id="l-step3-t">Scan the QR code</div>
+        <div class="step-desc" id="l-step3-d">When you're ready to pay, click "Pay with Lightning" on the store. A QR code will appear — open your wallet, tap "Send" or "Scan", and scan it.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <div class="step-title" id="l-step4-t">Done — instant payment</div>
+        <div class="step-desc" id="l-step4-d">The payment settles in seconds. No bank delays, no fees, no borders. The merchant receives the sats instantly.</div>
+        <div class="step-tip" id="l-step4-tip">⚡ Lightning payments are final and irreversible — like cash, but digital.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="sec-lbl" id="l-faq-lbl">Common questions</div>
+  <div class="faq">
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span id="l-faq1-q">Is Bitcoin safe to use?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a" id="l-faq1-a">Yes. Bitcoin has been running without interruption since 2009. Lightning payments are secured cryptographically — no one can fake or reverse a payment without your approval.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span id="l-faq2-q">What if Bitcoin's price goes down after I pay?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a" id="l-faq2-a">The price you see at checkout is locked in at that moment. You pay the equivalent of the product's fiat price in sats — if BTC moves later, your purchase is already complete.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span id="l-faq3-q">Are there fees?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a" id="l-faq3-a">Lightning fees are typically less than 1 sat — fractions of a cent. For most purchases they're effectively zero. This is one of the main advantages over credit cards (2-3% fees) or bank transfers.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span id="l-faq4-q">What's the difference between Bitcoin and Lightning?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a" id="l-faq4-a">Bitcoin is the base layer — think of it like gold. Lightning is a payment network built on top — think of it like a debit card connected to your gold reserve. Lightning makes small, instant payments practical.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span id="l-faq5-q">Can I get a refund?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-a" id="l-faq5-a">Lightning payments are irreversible like cash. Refund policies depend on the merchant — contact them directly if you need a refund. They can send sats back to your Lightning address.</div>
+    </div>
+  </div>
+
+  <!-- Bottom CTA -->
+  <div class="bottom-cta">
+    <h2 id="l-cta-title">Ready to try it?</h2>
+    <p id="l-cta-desc">Download a wallet and make your first Lightning payment in minutes.</p>
+    <div class="cta-btns">
+      <a class="cta-btn" href="https://www.walletofsatoshi.com" target="_blank" rel="noopener" id="l-cta-wos">🟠 Get Wallet of Satoshi</a>
+      <a class="cta-btn cta-btn-sec" href="index.html" id="l-cta-back">← Back to store</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <span id="l-footer">Powered by</span> <a href="https://S4NTO-07.github.io/sats-business" target="_blank">Sats for Business</a> ⚡
+</footer>
+
+<script>
+var lang = 'en';
+
+var STRINGS = {
+  en: {
+    'h-title': 'How to pay with <em>Bitcoin Lightning</em>',
+    'h-sub': 'Fast, free, and borderless. Set up your wallet in 2 minutes.',
+    'l-wallets-lbl': 'Step 1 — Choose a wallet',
+    'l-wos-badge': '⭐ Best for beginners',
+    'l-wos-desc': 'The simplest Lightning wallet. Download, open, and you\'re ready to receive and send sats in under 2 minutes. No technical knowledge required.',
+    'l-wos-f1':'✓ No setup','l-wos-f2':'✓ Free','l-wos-f3':'✓ iOS & Android','l-wos-f4':'✓ Lightning address included',
+    'l-strike-badge': '🇲🇽 Great for Mexico & US',
+    'l-strike-desc': 'Best option if you\'re in Mexico or the US. Connect your bank account to buy sats with pesos or dollars.',
+    'l-strike-f1':'✓ Bank integration','l-strike-f2':'✓ Buy with MXN / USD','l-strike-f3':'✓ Free transfers','l-strike-f4':'✓ iOS & Android',
+    'l-muun-badge': '🛡️ Self-custody',
+    'l-muun-desc': 'For those who want full control of their Bitcoin. No company holds your funds. Open source and audited.',
+    'l-muun-f1':'✓ Self-custody','l-muun-f2':'✓ No KYC','l-muun-f3':'✓ Open source','l-muun-f4':'✓ Lightning + on-chain',
+    'l-steps-lbl': 'Step 2 — Make your first payment',
+    'l-step1-t': 'Download a wallet', 'l-step1-d': 'Pick one from the list above. Wallet of Satoshi is recommended if this is your first time.',
+    'l-step2-t': 'Add some sats', 'l-step2-d': 'Buy Bitcoin directly in the app with your card or bank account. You can start with as little as $50 MXN.',
+    'l-step2-tip': '💡 Tip: Only buy what you need for now. You can always add more later.',
+    'l-step3-t': 'Scan the QR code', 'l-step3-d': 'When ready to pay, click "Pay with Lightning" on the store. A QR code will appear — open your wallet, tap Send, and scan it.',
+    'l-step4-t': 'Done — instant payment', 'l-step4-d': 'The payment settles in seconds. No bank delays, no fees, no borders.',
+    'l-step4-tip': '⚡ Lightning payments are final and irreversible — like cash, but digital.',
+    'l-faq-lbl': 'Common questions',
+    'l-faq1-q': 'Is Bitcoin safe to use?',
+    'l-faq1-a': 'Yes. Bitcoin has been running without interruption since 2009. Lightning payments are secured cryptographically.',
+    'l-faq2-q': "What if Bitcoin's price goes down after I pay?",
+    'l-faq2-a': 'The price you see at checkout is locked in at that moment. Your purchase is already complete.',
+    'l-faq3-q': 'Are there fees?',
+    'l-faq3-a': 'Lightning fees are typically less than 1 sat — fractions of a cent. Effectively zero for most purchases.',
+    'l-faq4-q': 'What\'s the difference between Bitcoin and Lightning?',
+    'l-faq4-a': 'Bitcoin is the base layer. Lightning is a payment network built on top that makes small, instant payments practical.',
+    'l-faq5-q': 'Can I get a refund?',
+    'l-faq5-a': 'Lightning payments are irreversible like cash. Contact the merchant directly — they can send sats back to your Lightning address.',
+    'l-cta-title': 'Ready to try it?',
+    'l-cta-desc': 'Download a wallet and make your first Lightning payment in minutes.',
+    'l-cta-wos': '🟠 Get Wallet of Satoshi',
+    'l-cta-back': '← Back to store',
+    'l-footer': 'Powered by',
+  },
+  es: {
+    'h-title': 'Cómo pagar con <em>Bitcoin Lightning</em>',
+    'h-sub': 'Rápido, gratis y sin fronteras. Configura tu wallet en 2 minutos.',
+    'l-wallets-lbl': 'Paso 1 — Elige una wallet',
+    'l-wos-badge': '⭐ Mejor para principiantes',
+    'l-wos-desc': 'La wallet Lightning más simple. Descarga, abre y ya puedes enviar y recibir sats en menos de 2 minutos. Sin conocimientos técnicos.',
+    'l-wos-f1':'✓ Sin configuración','l-wos-f2':'✓ Gratis','l-wos-f3':'✓ iOS y Android','l-wos-f4':'✓ Dirección Lightning incluida',
+    'l-strike-badge': '🇲🇽 Ideal para México y EE.UU.',
+    'l-strike-desc': 'Mejor opción si estás en México o EE.UU. Conecta tu cuenta bancaria para comprar sats con pesos o dólares.',
+    'l-strike-f1':'✓ Integración bancaria','l-strike-f2':'✓ Compra con MXN / USD','l-strike-f3':'✓ Transferencias gratis','l-strike-f4':'✓ iOS y Android',
+    'l-muun-badge': '🛡️ Auto-custodia',
+    'l-muun-desc': 'Para quienes quieren control total de su Bitcoin. Ninguna empresa guarda tus fondos. Código abierto y auditado.',
+    'l-muun-f1':'✓ Auto-custodia','l-muun-f2':'✓ Sin KYC','l-muun-f3':'✓ Código abierto','l-muun-f4':'✓ Lightning + on-chain',
+    'l-steps-lbl': 'Paso 2 — Haz tu primer pago',
+    'l-step1-t': 'Descarga una wallet', 'l-step1-d': 'Elige una de la lista de arriba. Wallet of Satoshi es lo recomendado si es tu primera vez.',
+    'l-step2-t': 'Agrega sats', 'l-step2-d': 'Compra Bitcoin directo en la app con tu tarjeta o cuenta bancaria. Puedes empezar desde $50 MXN.',
+    'l-step2-tip': '💡 Tip: Solo compra lo que necesitas por ahora. Siempre puedes agregar más después.',
+    'l-step3-t': 'Escanea el código QR', 'l-step3-d': 'Cuando quieras pagar, haz clic en "Pagar con Lightning". Aparece un QR — abre tu wallet, toca Enviar y escanéalo.',
+    'l-step4-t': 'Listo — pago instantáneo', 'l-step4-d': 'El pago se confirma en segundos. Sin demoras bancarias, sin comisiones, sin fronteras.',
+    'l-step4-tip': '⚡ Los pagos Lightning son finales e irreversibles — como efectivo, pero digital.',
+    'l-faq-lbl': 'Preguntas frecuentes',
+    'l-faq1-q': '¿Es seguro usar Bitcoin?',
+    'l-faq1-a': 'Sí. Bitcoin lleva funcionando sin interrupciones desde 2009. Los pagos Lightning están asegurados criptográficamente.',
+    'l-faq2-q': '¿Qué pasa si el precio de Bitcoin baja después de pagar?',
+    'l-faq2-a': 'El precio que ves al hacer el pago queda fijado en ese momento. Tu compra ya está completa.',
+    'l-faq3-q': '¿Hay comisiones?',
+    'l-faq3-a': 'Las comisiones de Lightning son típicamente menos de 1 sat — fracciones de centavo. Prácticamente cero.',
+    'l-faq4-q': '¿Cuál es la diferencia entre Bitcoin y Lightning?',
+    'l-faq4-a': 'Bitcoin es la capa base. Lightning es una red de pagos construida encima que hace prácticos los pagos pequeños e instantáneos.',
+    'l-faq5-q': '¿Puedo pedir reembolso?',
+    'l-faq5-a': 'Los pagos Lightning son irreversibles como el efectivo. Contacta al comercio directamente — puede enviarte sats a tu dirección Lightning.',
+    'l-cta-title': '¿Listo para probarlo?',
+    'l-cta-desc': 'Descarga una wallet y haz tu primer pago Lightning en minutos.',
+    'l-cta-wos': '🟠 Descargar Wallet of Satoshi',
+    'l-cta-back': '← Volver a la tienda',
+    'l-footer': 'Impulsado por',
+  }
+};
+
+function setLang(l) {
+  lang = l;
+  document.querySelectorAll('.lang-btn').forEach(function(btn) {
+    btn.classList.toggle('active', btn.textContent.toLowerCase().includes(l === 'en' ? 'english' : 'español'));
+  });
+  var s = STRINGS[l];
+  Object.keys(s).forEach(function(id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.innerHTML = s[id];
+  });
+}
+
+function toggleFaq(el) {
+  var item = el.parentElement;
+  var wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(function(i) { i.classList.remove('open'); });
+  if (!wasOpen) item.classList.add('open');
+}
+</script>
+</body>
+</html>

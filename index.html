@@ -3,16 +3,17 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Sats for Business — Muestra tus precios en Bitcoin</title>
+<title>SATUNO Business — Muestra tus precios en Bitcoin</title>
 <meta name="sats-ignore" content="true"/>
 <meta name="description" content="Widget gratis que muestra tus precios en satoshis. Para tiendas físicas, e-commerce y empresas."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --btc:#F7931A;--btc-l:rgba(247,147,26,0.1);--btc-b:rgba(247,147,26,0.25);
-  --bg:#0a0a0a;--bg2:#141414;--bg3:#1c1c1c;--line:#252525;
+  --btc:#FFBA00;--btc-l:rgba(255,186,0,0.1);--btc-b:rgba(255,186,0,0.25);
+  --bg:#0D0D0D;--bg2:#141414;--bg3:#1c1c1c;--line:#252525;
   --text:#f2f2f2;--muted:#777;--muted2:#444;--green:#22c55e;
 }
 html{scroll-behavior:smooth}
@@ -258,7 +259,7 @@ footer{border-top:1px solid var(--line);padding:28px 40px;display:flex;align-ite
   </div>
   <div style="background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:20px 24px">
     <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--muted2);margin-bottom:12px" id="l-install-lbl">Una sola línea de código</div>
-    <div style="background:#0a0a0a;border-radius:8px;padding:14px 16px;font-family:monospace;font-size:13px;color:#F7931A;overflow-x:auto">
+    <div style="background:#0D0D0D;border-radius:8px;padding:14px 16px;font-family:monospace;font-size:13px;color:#FFBA00;overflow-x:auto">
       &lt;script src="https://S4NTO-07.github.io/sats-business/sats-widget.js"<br>
       &nbsp;&nbsp;data-currency="MXN"<br>
       &nbsp;&nbsp;data-lightning="tu@wallet.com"&gt;<br>
@@ -321,7 +322,7 @@ footer{border-top:1px solid var(--line);padding:28px 40px;display:flex;align-ite
 <footer>
   <div class="nav-brand">
     <div class="nav-logo" style="width:24px;height:24px;font-size:13px">₿</div>
-    <span style="font-size:14px">Sats for Business</span>
+    <span style="font-size:14px">SATUNO Business</span>
   </div>
   <div class="ft-links">
     <a href="https://github.com/S4NTO-07/sats-extension" class="ft-link" target="_blank">GitHub</a>
@@ -431,7 +432,7 @@ updateBadge();
 document.getElementById('pilotForm').addEventListener('submit', function(e){
   e.preventDefault();
   var fd = new FormData(e.target);
-  var body = 'Nuevo piloto Sats for Business:\n\n';
+  var body = 'Nuevo piloto SATUNO Business:\n\n';
   body += 'Negocio: ' + fd.get('business') + '\n';
   body += 'Nombre: '  + fd.get('name')     + '\n';
   body += 'Teléfono: '+ fd.get('phone')    + '\n';

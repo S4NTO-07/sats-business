@@ -1,5 +1,5 @@
 /**
- * sats-widget.js — Sats for Business
+ * sats-widget.js — SATUNO Business
  * 
  * Usage (auto-detect):
  *   <script src="sats-widget.js" data-currency="MXN"></script>
@@ -10,7 +10,7 @@
  *
  * Options (data attributes on the script tag):
  *   data-currency   — ISO currency code (MXN, USD, EUR...) default: auto-detect
- *   data-color      — Badge color (default: #F7931A)
+ *   data-color      — Badge color (default: #FFBA00)
  *   data-mode       — "append" | "replace" | "inline" (default: append)
  *   data-lightning  — Your Lightning address for the Pay button
  *   data-lang       — "es" | "en" (default: auto from browser)
@@ -25,7 +25,7 @@
 
   var CONFIG = {
     currency:    (scriptTag && scriptTag.getAttribute('data-currency'))    || 'AUTO',
-    color:       (scriptTag && scriptTag.getAttribute('data-color'))       || '#F7931A',
+    color:       (scriptTag && scriptTag.getAttribute('data-color'))       || '#FFBA00',
     mode:        (scriptTag && scriptTag.getAttribute('data-mode'))        || 'append',
     lightning:   (scriptTag && scriptTag.getAttribute('data-lightning'))   || '',
     lang:        (scriptTag && scriptTag.getAttribute('data-lang'))        || 
@@ -161,7 +161,7 @@
     var c = CONFIG.color;
     style.textContent = [
       '.sats-badge{display:inline-flex;align-items:center;gap:5px;',
-        'background:rgba(247,147,26,0.08);border:1px solid rgba(247,147,26,0.2);',
+        'background:rgba(255,186,0,0.08);border:1px solid rgba(255,186,0,0.2);',
         'border-radius:5px;padding:2px 8px;font-size:0.8em;font-weight:700;',
         'color:' + c + ';white-space:nowrap;vertical-align:middle;',
         'font-family:-apple-system,sans-serif;margin-left:6px;cursor:default}',

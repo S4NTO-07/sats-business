@@ -3,140 +3,289 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>MiTienda — Demo SATUNO Business</title>
 <meta name="sats-ignore" content="true"/>
+<title>SATUNO Store Demo</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --btc:#F7931A;--btc-l:rgba(247,147,26,0.09);--btc-b:rgba(247,147,26,0.22);
-  --bg:#f7f7f5;--white:#ffffff;--text:#111;--muted:#888;--line:#e8e8e6;
-  --green:#16a34a;--accent:#111;
+  --btc:#F7931A;--btc-l:rgba(247,147,26,0.1);--btc-b:rgba(247,147,26,0.22);
+  --bg:#f7f7f5;--white:#fff;--text:#111;--muted:#888;--line:#e8e8e6;
+  --green:#16a34a;--dark:#0D0D0D;
 }
-body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:15px;line-height:1.5}
+body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',system-ui,sans-serif;font-size:15px;line-height:1.5}
 
-/* ── Demo banner ── */
-.demo-banner{background:#111;color:#F7931A;padding:9px 20px;text-align:center;font-size:12px;font-weight:600;letter-spacing:.3px;display:flex;align-items:center;justify-content:center;gap:8px}
-.demo-banner a{color:#fff;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.3)}
+/* ── Top bar ── */
+.topbar{
+  background:var(--dark);color:#fff;
+  padding:8px 32px;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:8px;
+  font-size:12px;
+}
+.topbar-left{display:flex;align-items:center;gap:6px;color:rgba(255,255,255,.6)}
+.topbar-left a{color:#fff;text-decoration:none;font-weight:600}
+.topbar-controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.ctrl-group{display:flex;align-items:center;gap:4px}
+.ctrl-label{font-size:10px;color:rgba(255,255,255,.4);margin-right:2px}
+.ctrl-btn{
+  background:rgba(255,255,255,.1);color:rgba(255,255,255,.7);
+  border:1px solid rgba(255,255,255,.15);border-radius:5px;
+  padding:3px 9px;font-size:11px;font-weight:700;
+  cursor:pointer;font-family:inherit;transition:all .15s;
+}
+.ctrl-btn:hover{background:rgba(255,255,255,.2);color:#fff}
+.ctrl-btn.active{background:var(--btc);color:#fff;border-color:var(--btc)}
+.ctrl-divider{width:1px;height:14px;background:rgba(255,255,255,.15)}
 
 /* ── Nav ── */
-nav{background:var(--white);border-bottom:1px solid var(--line);padding:0 40px;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
-.nav-logo{font-size:20px;font-weight:800;letter-spacing:-0.5px}
+nav{
+  background:var(--white);border-bottom:1px solid var(--line);
+  padding:0 32px;height:60px;
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:50;
+}
+.nav-logo{font-size:19px;font-weight:800;letter-spacing:-0.5px}
 .nav-logo span{color:var(--btc)}
-.nav-links{display:flex;gap:28px}
+.nav-links{display:flex;gap:24px}
 .nav-link{font-size:13px;color:var(--muted);text-decoration:none;transition:color .15s}
 .nav-link:hover{color:var(--text)}
-.nav-right{display:flex;align-items:center;gap:16px}
-.nav-search{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 14px;font-size:13px;color:var(--muted);width:200px;outline:none}
-.cart-btn{background:var(--accent);color:#fff;border:none;border-radius:8px;padding:9px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:6px;transition:opacity .15s}
-.cart-btn:hover{opacity:.88}
-.cart-count{background:var(--btc);color:#fff;border-radius:50%;width:18px;height:18px;font-size:10px;font-weight:800;display:inline-flex;align-items:center;justify-content:center}
+.nav-right{display:flex;align-items:center;gap:12px}
+.cart-btn{
+  background:var(--dark);color:#fff;border:none;
+  border-radius:8px;padding:8px 16px;
+  font-size:13px;font-weight:600;cursor:pointer;
+  font-family:inherit;display:flex;align-items:center;gap:6px;
+}
+.cart-count{
+  background:var(--btc);color:#fff;border-radius:50%;
+  width:18px;height:18px;font-size:10px;font-weight:800;
+  display:inline-flex;align-items:center;justify-content:center;
+}
 
 /* ── Hero ── */
-.hero{background:linear-gradient(135deg,#0D0D0D 0%,#1a1208 100%);color:#fff;padding:64px 40px;display:flex;align-items:center;justify-content:space-between;gap:40px;overflow:hidden}
-.hero-text h1{font-size:clamp(32px,4vw,48px);font-weight:800;letter-spacing:-1px;line-height:1.15;margin-bottom:12px}
-.hero-text h1 em{font-style:normal;color:var(--btc)}
-.hero-text p{font-size:16px;color:rgba(255,255,255,.6);margin-bottom:28px;max-width:420px}
-.hero-btns{display:flex;gap:12px;flex-wrap:wrap}
-.hero-btn{background:var(--btc);color:#fff;border:none;border-radius:10px;padding:13px 28px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;transition:opacity .15s;text-decoration:none;display:inline-block}
-.hero-btn:hover{opacity:.88}
-.hero-btn-sec{background:transparent;border:1px solid rgba(255,255,255,.2);color:#fff;border-radius:10px;padding:13px 28px;font-size:15px;cursor:pointer;font-family:inherit;transition:all .15s;text-decoration:none;display:inline-block}
-.hero-btn-sec:hover{border-color:rgba(255,255,255,.5)}
-.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(247,147,26,.12);border:1px solid var(--btc-b);border-radius:20px;padding:5px 14px;font-size:12px;font-weight:600;color:var(--btc);margin-bottom:18px}
-.hero-visual{font-size:120px;flex-shrink:0;line-height:1}
+.hero{
+  background:linear-gradient(135deg,#0D0D0D 0%,#1a1208 100%);
+  color:#fff;padding:60px 32px;
+  display:flex;align-items:center;justify-content:space-between;gap:32px;
+}
+.hero-tag{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--btc-l);border:1px solid var(--btc-b);
+  border-radius:20px;padding:5px 14px;
+  font-size:12px;font-weight:600;color:var(--btc);margin-bottom:16px;
+}
+.hero h1{font-size:clamp(28px,4vw,44px);font-weight:800;letter-spacing:-1px;line-height:1.15;margin-bottom:12px}
+.hero h1 em{font-style:normal;color:var(--btc)}
+.hero p{font-size:15px;color:rgba(255,255,255,.6);margin-bottom:24px;max-width:400px}
+.hero-btns{display:flex;gap:10px;flex-wrap:wrap}
+.hero-btn{background:var(--btc);color:#fff;border:none;border-radius:9px;padding:12px 24px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;text-decoration:none;display:inline-block}
+.hero-btn-sec{background:transparent;border:1px solid rgba(255,255,255,.2);color:#fff;border-radius:9px;padding:12px 24px;font-size:14px;cursor:pointer;font-family:inherit;text-decoration:none;display:inline-block}
+.hero-visual{font-size:100px;line-height:1;flex-shrink:0}
 
-/* ── Section ── */
-.section{max-width:1200px;margin:0 auto;padding:56px 40px}
-.section-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:32px}
-.section-title{font-size:24px;font-weight:700;letter-spacing:-0.3px}
-.section-link{font-size:13px;color:var(--btc);text-decoration:none;font-weight:600}
+/* ── Catalog ── */
+.catalog{max-width:1100px;margin:0 auto;padding:48px 32px}
+.catalog-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px}
+.catalog-title{font-size:22px;font-weight:700;letter-spacing:-0.3px}
+.catalog-link{font-size:13px;color:var(--btc);text-decoration:none;font-weight:600}
+.product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px}
 
-/* ── Product grid ── */
-.product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:20px}
-.product-card{background:var(--white);border:1px solid var(--line);border-radius:12px;overflow:hidden;cursor:pointer;transition:box-shadow .2s,transform .2s}
-.product-card:hover{box-shadow:0 8px 24px rgba(0,0,0,.08);transform:translateY(-2px)}
-.product-img{aspect-ratio:1;background:linear-gradient(135deg,#f0f0f0,#e8e8e8);display:flex;align-items:center;justify-content:center;font-size:52px;position:relative}
-.product-badge{position:absolute;top:10px;left:10px;background:var(--btc);color:#fff;font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px;letter-spacing:.3px}
-.product-body{padding:14px}
-.product-name{font-size:14px;font-weight:600;margin-bottom:3px;line-height:1.3}
-.product-sku{font-size:11px;color:var(--muted);margin-bottom:10px}
-.product-price-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px}
-.product-price{font-size:18px;font-weight:700}
-.sats-badge{display:inline-flex;align-items:center;background:var(--btc-l);border:1px solid var(--btc-b);border-radius:5px;padding:2px 7px;font-size:11px;font-weight:700;color:var(--btc);white-space:nowrap}
-.add-to-cart{width:100%;background:var(--accent);color:#fff;border:none;border-radius:8px;padding:9px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;margin-top:10px;transition:opacity .15s}
-.add-to-cart:hover{opacity:.85}
-.added{background:var(--green)!important}
+/* ── Product card ── */
+.product-card{
+  background:var(--white);border:1px solid var(--line);
+  border-radius:12px;overflow:hidden;cursor:pointer;
+  transition:box-shadow .2s,transform .2s;
+}
+.product-card:hover{box-shadow:0 6px 20px rgba(0,0,0,.08);transform:translateY(-2px)}
+.product-img{
+  aspect-ratio:1;background:linear-gradient(135deg,#f0f0ee,#e8e8e6);
+  display:flex;align-items:center;justify-content:center;font-size:48px;
+  position:relative;
+}
+.product-badge-el{
+  position:absolute;top:8px;left:8px;
+  background:var(--btc);color:#fff;
+  font-size:9px;font-weight:700;padding:2px 7px;border-radius:4px;letter-spacing:.3px;
+}
+.product-body{padding:12px}
+.product-name{font-size:13px;font-weight:600;margin-bottom:2px;line-height:1.3}
+.product-sku{font-size:11px;color:var(--muted);margin-bottom:8px}
+.product-price-row{display:flex;align-items:center;flex-wrap:wrap;gap:4px;margin-bottom:8px}
+.product-price{font-size:17px;font-weight:700}
+.sats-badge{
+  display:inline-flex;align-items:center;
+  background:var(--btc-l);border:1px solid var(--btc-b);
+  border-radius:4px;padding:2px 6px;
+  font-size:11px;font-weight:700;color:var(--btc);white-space:nowrap;
+}
+.add-btn{
+  width:100%;background:var(--dark);color:#fff;border:none;
+  border-radius:7px;padding:8px;font-size:12px;font-weight:600;
+  cursor:pointer;font-family:inherit;transition:all .15s;
+}
+.add-btn:hover{background:#222}
+.add-btn.added{background:var(--green)}
 
-/* ── Bitcoin promo strip ── */
-.btc-strip{background:linear-gradient(135deg,#0D0D0D,#1a1208);padding:40px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
-.btc-strip-text h2{font-size:22px;font-weight:700;color:#fff;margin-bottom:6px}
-.btc-strip-text p{font-size:14px;color:rgba(255,255,255,.6)}
-.btc-strip-wallets{display:flex;gap:10px;flex-wrap:wrap}
-.wallet-chip{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:8px 14px;color:rgba(255,255,255,.8);font-size:13px;font-weight:600;text-decoration:none;transition:all .15s;display:flex;align-items:center;gap:6px}
+/* ── How to pay strip ── */
+.how-strip{
+  background:var(--white);border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  padding:24px 32px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
+}
+.how-strip-text h3{font-size:16px;font-weight:700;margin-bottom:4px}
+.how-strip-text p{font-size:13px;color:var(--muted)}
+.how-strip-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--btc);color:#fff;text-decoration:none;
+  border-radius:9px;padding:11px 20px;font-size:13px;font-weight:700;
+  white-space:nowrap;flex-shrink:0;
+}
+
+/* ── BTC Strip ── */
+.btc-strip{
+  background:linear-gradient(135deg,#0D0D0D,#1a1208);
+  padding:36px 32px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;
+}
+.btc-strip h2{font-size:20px;font-weight:700;color:#fff;margin-bottom:6px}
+.btc-strip p{font-size:13px;color:rgba(255,255,255,.5)}
+.wallet-chips{display:flex;gap:8px;flex-wrap:wrap}
+.wallet-chip{
+  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);
+  border-radius:8px;padding:8px 14px;color:rgba(255,255,255,.8);
+  font-size:12px;font-weight:600;text-decoration:none;
+  display:flex;align-items:center;gap:6px;transition:all .15s;
+}
 .wallet-chip:hover{border-color:var(--btc);color:#fff}
 
+/* ── Floating how-to-pay ── */
+.float-btn{
+  position:fixed;bottom:20px;left:20px;z-index:999;
+  display:flex;align-items:center;gap:7px;
+  background:var(--btc);color:#fff;text-decoration:none;
+  border-radius:50px;padding:10px 18px;
+  font-size:12px;font-weight:700;
+  box-shadow:0 4px 18px rgba(247,147,26,.4);
+  font-family:inherit;transition:opacity .15s;
+}
+.float-btn:hover{opacity:.88}
+
 /* ── Cart notification ── */
-.cart-notif{position:fixed;bottom:24px;right:24px;background:#111;color:#fff;border-radius:10px;padding:14px 18px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:10px;box-shadow:0 8px 24px rgba(0,0,0,.3);transform:translateY(80px);opacity:0;transition:all .3s;z-index:999}
+.cart-notif{
+  position:fixed;bottom:20px;right:20px;
+  background:var(--dark);color:#fff;border-radius:10px;
+  padding:12px 16px;font-size:13px;font-weight:600;
+  display:flex;align-items:center;gap:8px;
+  box-shadow:0 6px 20px rgba(0,0,0,.3);
+  transform:translateY(60px);opacity:0;
+  transition:all .3s;z-index:9998;pointer-events:none;
+}
 .cart-notif.show{transform:translateY(0);opacity:1}
-.cart-notif span{color:var(--btc)}
+
+/* ── Modal overlay ── */
+.modal-overlay{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,.6);z-index:9999;
+  align-items:center;justify-content:center;padding:20px;
+}
+.modal-overlay.open{display:flex}
+.modal-box{
+  background:var(--white);border-radius:16px;
+  max-width:460px;width:100%;max-height:90vh;overflow-y:auto;
+}
+.modal-head{
+  padding:20px 24px;border-bottom:1px solid var(--line);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.modal-head-title{font-size:15px;font-weight:700}
+.modal-close-btn{background:none;border:none;font-size:22px;cursor:pointer;color:var(--muted);line-height:1}
+.modal-body{padding:24px}
+.modal-emoji{text-align:center;font-size:60px;margin-bottom:14px}
+.modal-price-row{display:flex;align-items:baseline;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:6px}
+.modal-price{font-size:30px;font-weight:800}
+.modal-rate{font-size:11px;color:var(--muted);text-align:center;margin-bottom:20px}
+.modal-pay-lightning{
+  width:100%;background:var(--btc);color:#fff;border:none;
+  border-radius:10px;padding:14px;font-size:15px;font-weight:700;
+  cursor:pointer;font-family:inherit;margin-bottom:10px;
+}
+.modal-pay-card{
+  width:100%;background:var(--dark);color:#fff;border:none;
+  border-radius:10px;padding:13px;font-size:14px;font-weight:600;
+  cursor:pointer;font-family:inherit;margin-bottom:16px;
+}
+.modal-wallets{border-top:1px solid var(--line);padding-top:14px}
+.modal-wallets-label{font-size:11px;color:var(--muted);text-align:center;margin-bottom:10px}
+.modal-wallet-links{display:flex;gap:7px;justify-content:center;flex-wrap:wrap}
+.modal-wallet-link{
+  background:var(--bg);border:1px solid var(--line);
+  border-radius:7px;padding:7px 12px;text-decoration:none;
+  color:var(--text);font-size:12px;font-weight:600;
+  display:flex;align-items:center;gap:5px;transition:all .15s;
+}
+.modal-wallet-link:hover{border-color:var(--btc);color:var(--btc)}
+.modal-wallet-link.primary{background:var(--btc);color:#fff;border-color:var(--btc)}
+
+/* ── Lightning modal ── */
+.ln-modal-box{
+  background:#111;border:1px solid #2a2a2a;border-top:3px solid var(--btc);
+  border-radius:14px;padding:28px;max-width:300px;width:90%;text-align:center;
+  font-family:inherit;
+}
+.ln-title{font-size:14px;font-weight:700;color:var(--btc);margin-bottom:14px}
+.ln-sats{font-size:28px;font-weight:800;color:var(--btc);letter-spacing:-0.5px}
+.ln-fiat{font-size:12px;color:#666;margin:4px 0 16px}
+.ln-qr{width:170px;height:170px;background:#fff;border-radius:8px;margin:0 auto 12px;overflow:hidden}
+.ln-qr img{width:100%;height:100%}
+.ln-addr{font-size:10px;color:#555;font-family:monospace;word-break:break-all;margin-bottom:14px}
+.ln-wallets-row{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-bottom:14px}
+.ln-wallet-btn{
+  background:#1a1a1a;border:1px solid #2a2a2a;border-radius:6px;
+  padding:5px 9px;text-decoration:none;color:#ccc;font-size:11px;font-weight:600;
+  display:inline-flex;align-items:center;gap:4px;transition:all .15s;
+}
+.ln-wallet-btn:hover{border-color:var(--btc);color:#fff}
+.ln-close{
+  width:100%;background:#1a1a1a;border:1px solid #2a2a2a;color:#666;
+  border-radius:7px;padding:10px;font-size:12px;cursor:pointer;font-family:inherit;
+}
 
 /* ── Footer ── */
-footer{background:#111;color:rgba(255,255,255,.4);padding:32px 40px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;font-size:12px}
+footer{
+  background:var(--dark);color:rgba(255,255,255,.35);
+  padding:24px 32px;display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:12px;font-size:12px;
+}
 footer a{color:var(--btc);text-decoration:none}
 
-@media(max-width:768px){
-  nav{padding:0 20px}
-  .nav-links,.nav-search{display:none}
-  .hero{padding:48px 20px;flex-direction:column}
-  .hero-visual{font-size:72px}
-  .section{padding:40px 20px}
-  .btc-strip{padding:28px 20px}
+@media(max-width:700px){
+  nav{padding:0 16px}.nav-links{display:none}
+  .hero{padding:40px 16px;flex-direction:column}.hero-visual{display:none}
+  .catalog{padding:32px 16px}
+  .how-strip{padding:20px 16px}
+  .btc-strip{padding:28px 16px}
+  .topbar{padding:8px 16px}
 }
 </style>
 </head>
 <body>
 
-<!-- Demo banner -->
-<!-- Floating how-to-pay button — always visible -->
-<a href="how-to-pay.html"
-   style="position:fixed;bottom:24px;left:24px;z-index:999;
-          display:flex;align-items:center;gap:8px;
-          background:#F7931A;color:#fff;text-decoration:none;
-          border-radius:50px;padding:12px 20px;
-          font-size:13px;font-weight:700;
-          box-shadow:0 4px 20px rgba(247,147,26,0.4);
-          transition:opacity .15s;font-family:inherit"
-   onmouseover="this.style.opacity='.88'"
-   onmouseout="this.style.opacity='1'">
-  ⚡ ¿Cómo pago con Bitcoin?
-</a>
-
-<div class="demo-banner" style="justify-content:space-between;flex-wrap:wrap;gap:10px">
-  <span>⚡ Demo — <a href="index.html">SATUNO Business</a></span>
-  <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-
-    <!-- Lang toggle -->
-    <div style="display:flex;align-items:center;gap:4px">
-      <span style="font-size:10px;color:rgba(255,255,255,.4)">🌐</span>
-      <button onclick="toggleLang()" id="langToggle"
-        style="background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:5px;padding:3px 10px;font-size:11px;font-weight:700;cursor:pointer;transition:all .15s">
-        EN
-      </button>
+<!-- Top control bar -->
+<div class="topbar">
+  <div class="topbar-left">
+    ⚡ Demo — <a href="index.html">SATUNO Business</a>
+  </div>
+  <div class="topbar-controls">
+    <div class="ctrl-group">
+      <span class="ctrl-label" id="l-lang">🌐</span>
+      <button class="ctrl-btn" id="btnEN" onclick="setLang('en')">EN</button>
+      <button class="ctrl-btn" id="btnES" onclick="setLang('es')">ES</button>
     </div>
-
-    <div style="width:1px;height:14px;background:rgba(255,255,255,.15)"></div>
-
-    <!-- Denomination toggle -->
-    <div style="display:flex;align-items:center;gap:4px">
-      <span style="font-size:10px;color:rgba(255,255,255,.4)" id="showInLabel">Mostrar en:</span>
-      <button onclick="setDenom('sats')" id="d-sats"
-        style="background:#F7931A;color:#fff;border:none;border-radius:5px;padding:3px 9px;font-size:11px;font-weight:700;cursor:pointer">⚡ sats</button>
-      <button onclick="setDenom('btc')" id="d-btc"
-        style="background:rgba(255,255,255,.1);color:rgba(255,255,255,.6);border:none;border-radius:5px;padding:3px 9px;font-size:11px;font-weight:700;cursor:pointer">₿ BTC</button>
-      <button onclick="setDenom('both')" id="d-both"
-        style="background:rgba(255,255,255,.1);color:rgba(255,255,255,.6);border:none;border-radius:5px;padding:3px 9px;font-size:11px;font-weight:700;cursor:pointer">+ Both</button>
+    <div class="ctrl-divider"></div>
+    <div class="ctrl-group">
+      <span class="ctrl-label" id="l-show-in">Mostrar en:</span>
+      <button class="ctrl-btn active" id="d-sats" onclick="setDenom('sats')">⚡ sats</button>
+      <button class="ctrl-btn" id="d-btc"  onclick="setDenom('btc')">₿ BTC</button>
+      <button class="ctrl-btn" id="d-both" onclick="setDenom('both')">+ Both</button>
     </div>
-
   </div>
 </div>
 
@@ -144,122 +293,308 @@ footer a{color:var(--btc);text-decoration:none}
 <nav>
   <div class="nav-logo">mi<span>tienda</span></div>
   <div class="nav-links">
-    <a href="#" class="nav-link">Inicio</a>
-    <a href="#catalogo" class="nav-link">Catálogo</a>
-    <a href="how-to-pay.html" class="nav-link">¿Cómo pagar con Bitcoin?</a>
-    <a href="#" class="nav-link">Nosotros</a>
+    <a href="#" class="nav-link" id="l-nav-home">Inicio</a>
+    <a href="#catalog" class="nav-link" id="l-nav-catalog">Catálogo</a>
+    <a href="how-to-pay.html" class="nav-link" id="l-nav-how">¿Cómo pagar con Bitcoin?</a>
   </div>
   <div class="nav-right">
-    <input class="nav-search" id="searchPlaceholder" placeholder="Buscar productos..." readonly/>
-<button class="cart-btn" onclick="openCart()">
-      <span id="cartLabel">🛒 Carrito</span> <span class="cart-count" id="cartCount">0</span>
+    <button class="cart-btn" onclick="showCart()">
+      <span id="l-cart">🛒 Carrito</span>
+      <span class="cart-count" id="cartCount">0</span>
     </button>
   </div>
 </nav>
 
 <!-- Hero -->
 <div class="hero">
-  <div class="hero-text">
-    <div class="hero-badge" id="heroTag">⚡ Aceptamos Bitcoin Lightning</div>
-    <h1 id="heroTitle">Productos de calidad.<br>Paga en <em>sats</em>.</h1>
-    <p id="heroSub">Descubre nuestra colección y paga como prefieras — con tarjeta, transferencia, o Bitcoin Lightning al instante.</p>
+  <div>
+    <div class="hero-tag" id="l-hero-tag">⚡ Aceptamos Bitcoin Lightning</div>
+    <h1 id="l-hero-title">Productos de calidad.<br>Paga en <em>sats</em>.</h1>
+    <p id="l-hero-sub">Descubre nuestra colección y paga como prefieras — con tarjeta o Bitcoin Lightning al instante.</p>
     <div class="hero-btns">
-      <a href="#catalogo" class="hero-btn" id="heroCta1">Ver catálogo</a>
-      <a href="how-to-pay.html" class="hero-btn-sec" id="heroCta2">¿Cómo pago con Bitcoin?</a>
+      <a href="#catalog" class="hero-btn" id="l-hero-cta1">Ver catálogo</a>
+      <a href="how-to-pay.html" class="hero-btn-sec" id="l-hero-cta2">¿Cómo pago con Bitcoin?</a>
     </div>
   </div>
   <div class="hero-visual">🛍️</div>
 </div>
 
 <!-- Catalog -->
-<div class="section" id="catalogo">
-  <div class="section-top">
-    <div class="section-title" id="sectionTitle">Catálogo</div>
-    <a href="#" class="section-link" id="sectionLink">Ver todos →</a>
+<div class="catalog" id="catalog">
+  <div class="catalog-top">
+    <div class="catalog-title" id="l-catalog-title">Catálogo</div>
+    <a href="#" class="catalog-link" id="l-catalog-link">Ver todos →</a>
   </div>
-  <div class="product-grid" id="productGrid"></div>
+  <div class="product-grid" id="productGrid">
+    <!-- Rendered by JS -->
+  </div>
 </div>
 
-<!-- Bitcoin strip -->
-<!-- How to pay — always visible -->
-<div style="background:#fff;border-top:1px solid #e8e8e6;border-bottom:1px solid #e8e8e6;padding:28px 40px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap">
-  <div>
-    <div style="font-size:17px;font-weight:700;margin-bottom:5px" id="howLabel">⚡ ¿Cómo pago con Bitcoin Lightning?</div>
-    <div style="font-size:13px;color:#888" id="howSub">Descarga una wallet gratis y paga en segundos. Sin cuenta bancaria, sin fronteras.</div>
+<!-- How to pay strip -->
+<div class="how-strip">
+  <div class="how-strip-text">
+    <h3 id="l-how-title">⚡ ¿Cómo pago con Bitcoin Lightning?</h3>
+    <p id="l-how-sub">Descarga una wallet gratis y paga en segundos. Sin cuenta bancaria.</p>
   </div>
-  <a href="how-to-pay.html"
-     style="display:inline-flex;align-items:center;gap:8px;background:#F7931A;color:#fff;text-decoration:none;border-radius:10px;padding:12px 22px;font-size:14px;font-weight:700;white-space:nowrap;flex-shrink:0">
-    Ver guía paso a paso →
-  </a>
+  <a href="how-to-pay.html" class="how-strip-btn" id="l-how-btn">Ver guía paso a paso →</a>
 </div>
 
+<!-- BTC Strip -->
 <div class="btc-strip">
-  <div class="btc-strip-text">
-    <h2 id="btcStripTitle">⚡ Paga con Bitcoin Lightning</h2>
-    <p id="btcStripSub">Instantáneo, sin comisiones bancarias, disponible desde cualquier parte del mundo.</p>
+  <div>
+    <h2 id="l-btc-title">⚡ Paga con Bitcoin Lightning</h2>
+    <p id="l-btc-sub">Instantáneo, sin comisiones bancarias, disponible desde cualquier parte del mundo.</p>
   </div>
-  <div class="btc-strip-wallets">
+  <div class="wallet-chips">
     <a href="https://www.walletofsatoshi.com" target="_blank" class="wallet-chip">🟠 Wallet of Satoshi</a>
     <a href="https://strike.me" target="_blank" class="wallet-chip">⚡ Strike</a>
     <a href="https://muun.com" target="_blank" class="wallet-chip">🔒 Muun</a>
-    <a href="how-to-pay.html" class="wallet-chip" style="border-color:var(--btc);color:var(--btc)">Ver guía →</a>
+    <a href="how-to-pay.html" class="wallet-chip" style="border-color:var(--btc);color:var(--btc)" id="l-guide-link">Ver guía →</a>
   </div>
 </div>
 
+<!-- Footer -->
 <footer>
-  <span>© 2025 SATUNO Store Demo · <a href="index.html">Powered by SATUNO Business</a></span>
+  <span>© 2025 SATUNO Store Demo · <a href="index.html">Powered by SATUNO</a></span>
   <span>⚡ Bitcoin Lightning accepted</span>
 </footer>
 
+<!-- Floating how-to-pay -->
+<a href="how-to-pay.html" class="float-btn" id="l-float-btn">⚡ ¿Cómo pago con Bitcoin?</a>
+
 <!-- Cart notification -->
 <div class="cart-notif" id="cartNotif">
-  <span>⚡</span> <span id="cartNotifText">Producto agregado</span>
+  <span style="color:var(--btc)">⚡</span>
+  <span id="notifText">Producto agregado</span>
+</div>
+
+<!-- Product modal -->
+<div class="modal-overlay" id="productModal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <span class="modal-head-title" id="modalTitle">Producto</span>
+      <button class="modal-close-btn" onclick="closeModal('productModal')">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-emoji" id="modalEmoji">📦</div>
+      <div class="modal-price-row">
+        <span class="modal-price" id="modalPrice">$0</span>
+        <span class="sats-badge" id="modalBadge">—</span>
+      </div>
+      <div class="modal-rate" id="modalRate"></div>
+      <button class="modal-pay-lightning" id="modalPayLN">⚡ Pagar con Lightning</button>
+      <button class="modal-pay-card" id="modalPayCard">💳 Pagar con tarjeta</button>
+      <div class="modal-wallets">
+        <div class="modal-wallets-label" id="l-no-wallet">¿No tienes wallet Lightning?</div>
+        <div class="modal-wallet-links">
+          <a href="https://www.walletofsatoshi.com" target="_blank" class="modal-wallet-link primary">🟠 Wallet of Satoshi</a>
+          <a href="https://strike.me" target="_blank" class="modal-wallet-link">⚡ Strike</a>
+          <a href="how-to-pay.html" class="modal-wallet-link" id="l-guide-link2">Ver guía →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Lightning modal -->
+<div class="modal-overlay" id="lnModal">
+  <div class="ln-modal-box">
+    <div class="ln-title" id="l-ln-title">⚡ Pagar con Lightning</div>
+    <div class="ln-sats" id="lnSats">—</div>
+    <div class="ln-fiat" id="lnFiat">—</div>
+    <div class="ln-qr"><img id="lnQR" src="" alt="QR"/></div>
+    <div class="ln-addr">costlycredit50@walletofsatoshi.com</div>
+    <div class="ln-wallets-row">
+      <a href="https://www.walletofsatoshi.com" target="_blank" class="ln-wallet-btn">🟠 WoS</a>
+      <a href="https://strike.me" target="_blank" class="ln-wallet-btn">⚡ Strike</a>
+      <a href="https://muun.com" target="_blank" class="ln-wallet-btn">🔒 Muun</a>
+    </div>
+    <button class="ln-close" id="l-ln-close" onclick="closeModal('lnModal')">Cerrar</button>
+  </div>
 </div>
 
 <script>
+'use strict';
+
+// ── State ────────────────────────────────────────────────────
+var btcRate    = 2500000;  // fallback
+var rateLoaded = false;
+var cart       = [];
+var denom      = 'sats';
+var lang       = 'es';
+var currentProduct = null;
+
 var LIGHTNING = 'costlycredit50@walletofsatoshi.com';
-var btcRate   = 2500000;
-var cart      = [];
 
-var PRODUCTS = [ // kept for compat
-  // Use getCurrentProducts() for rendering
-  [
-  { id:1, name:'Auriculares Inalámbricos Pro', price:1299, emoji:'🎧', badge:'NUEVO', sku:'AUD-001' },
-  { id:2, name:'Smartwatch Series X',          price:2899, emoji:'⌚', badge:'TOP',   sku:'SWT-002' },
-  { id:3, name:'Teclado Mecánico RGB',          price:899,  emoji:'⌨️', badge:null,    sku:'TEC-003' },
-  { id:4, name:'Cámara Web 4K',                price:1599, emoji:'📷', badge:'OFERTA',sku:'CAM-004' },
-  { id:5, name:'Bocina Portátil Waterproof',    price:649,  emoji:'🔊', badge:null,    sku:'BOC-005' },
-  { id:6, name:'Mochila Tech Premium',          price:799,  emoji:'🎒', badge:'NUEVO', sku:'MCH-006' },
-];
+// ── Products ─────────────────────────────────────────────────
+var PRODUCTS = {
+  es: [
+    { id:1, name:'Auriculares Inalámbricos Pro',   price:1299, emoji:'🎧', badge:'NUEVO',  sku:'AUD-001' },
+    { id:2, name:'Smartwatch Series X',             price:2899, emoji:'⌚', badge:'TOP',    sku:'SWT-002' },
+    { id:3, name:'Teclado Mecánico RGB',             price:899,  emoji:'⌨️', badge:null,     sku:'TEC-003' },
+    { id:4, name:'Cámara Web 4K',                   price:1599, emoji:'📷', badge:'OFERTA', sku:'CAM-004' },
+    { id:5, name:'Bocina Portátil Waterproof',       price:649,  emoji:'🔊', badge:null,     sku:'BOC-005' },
+    { id:6, name:'Mochila Tech Premium',             price:799,  emoji:'🎒', badge:'NUEVO',  sku:'MCH-006' },
+  ],
+  en: [
+    { id:1, name:'Pro Wireless Headphones',         price:1299, emoji:'🎧', badge:'NEW',    sku:'AUD-001' },
+    { id:2, name:'Smartwatch Series X',             price:2899, emoji:'⌚', badge:'TOP',    sku:'SWT-002' },
+    { id:3, name:'Mechanical RGB Keyboard',         price:899,  emoji:'⌨️', badge:null,     sku:'TEC-003' },
+    { id:4, name:'4K Webcam',                       price:1599, emoji:'📷', badge:'SALE',   sku:'CAM-004' },
+    { id:5, name:'Waterproof Portable Speaker',     price:649,  emoji:'🔊', badge:null,     sku:'BOC-005' },
+    { id:6, name:'Premium Tech Backpack',           price:799,  emoji:'🎒', badge:'NEW',    sku:'MCH-006' },
+  ]
+};
 
-function fmt(sats) {
-  if (sats >= 1000000) return (sats/1000000).toFixed(1)+'M sats';
-  if (sats >= 10000)   return Math.round(sats/1000)+'k sats';
-  return sats.toLocaleString()+' sats';
+// ── Translations ──────────────────────────────────────────────
+var T = {
+  es: {
+    'l-show-in':    'Mostrar en:',
+    'l-nav-home':   'Inicio',
+    'l-nav-catalog':'Catálogo',
+    'l-nav-how':    '¿Cómo pagar con Bitcoin?',
+    'l-cart':       '🛒 Carrito',
+    'l-hero-tag':   '⚡ Aceptamos Bitcoin Lightning',
+    'l-hero-title': 'Productos de calidad.<br>Paga en <em>sats</em>.',
+    'l-hero-sub':   'Descubre nuestra colección y paga como prefieras — con tarjeta o Bitcoin Lightning al instante.',
+    'l-hero-cta1':  'Ver catálogo',
+    'l-hero-cta2':  '¿Cómo pago con Bitcoin?',
+    'l-catalog-title':'Catálogo',
+    'l-catalog-link': 'Ver todos →',
+    'l-how-title':  '⚡ ¿Cómo pago con Bitcoin Lightning?',
+    'l-how-sub':    'Descarga una wallet gratis y paga en segundos. Sin cuenta bancaria.',
+    'l-how-btn':    'Ver guía paso a paso →',
+    'l-btc-title':  '⚡ Paga con Bitcoin Lightning',
+    'l-btc-sub':    'Instantáneo, sin comisiones bancarias, disponible desde cualquier parte del mundo.',
+    'l-guide-link': 'Ver guía →',
+    'l-guide-link2':'Ver guía →',
+    'l-float-btn':  '⚡ ¿Cómo pago con Bitcoin?',
+    'l-no-wallet':  '¿No tienes wallet Lightning?',
+    'l-ln-title':   '⚡ Pagar con Lightning',
+    'l-ln-close':   'Cerrar',
+    addCart: 'Agregar al carrito',
+    added:   '✓ Agregado',
+    payLN:   '⚡ Pagar con Lightning',
+    payCard: '💳 Pagar con tarjeta',
+    cartEmpty: 'Tu carrito está vacío',
+    notif:   'agregado al carrito',
+  },
+  en: {
+    'l-show-in':    'Show in:',
+    'l-nav-home':   'Home',
+    'l-nav-catalog':'Catalog',
+    'l-nav-how':    'How to pay with Bitcoin?',
+    'l-cart':       '🛒 Cart',
+    'l-hero-tag':   '⚡ We accept Bitcoin Lightning',
+    'l-hero-title': 'Quality products.<br>Pay in <em>sats</em>.',
+    'l-hero-sub':   'Explore our collection and pay however you like — card or instant Bitcoin Lightning.',
+    'l-hero-cta1':  'Browse catalog',
+    'l-hero-cta2':  'How do I pay with Bitcoin?',
+    'l-catalog-title':'Catalog',
+    'l-catalog-link': 'View all →',
+    'l-how-title':  '⚡ How do I pay with Bitcoin Lightning?',
+    'l-how-sub':    'Download a free wallet and pay in seconds. No bank account needed.',
+    'l-how-btn':    'View step-by-step guide →',
+    'l-btc-title':  '⚡ Pay with Bitcoin Lightning',
+    'l-btc-sub':    'Instant, no bank fees, available from anywhere in the world.',
+    'l-guide-link': 'View guide →',
+    'l-guide-link2':'View guide →',
+    'l-float-btn':  '⚡ How do I pay with Bitcoin?',
+    'l-no-wallet':  "Don't have a Lightning wallet?",
+    'l-ln-title':   '⚡ Pay with Lightning',
+    'l-ln-close':   'Close',
+    addCart: 'Add to cart',
+    added:   '✓ Added',
+    payLN:   '⚡ Pay with Lightning',
+    payCard: '💳 Pay with card',
+    cartEmpty: 'Your cart is empty',
+    notif:   'added to cart',
+  }
+};
+
+// ── Formatters ────────────────────────────────────────────────
+function toSats(amount) {
+  return Math.round((amount / btcRate) * 1e8);
 }
 
-function toSats(p) { return Math.round((p/btcRate)*1e8); }
+function fmtSats(sats) {
+  if (sats >= 1000000) return (sats/1000000).toFixed(1) + 'M sats';
+  if (sats >= 10000)   return Math.round(sats/1000) + 'k sats';
+  return sats.toLocaleString() + ' sats';
+}
 
+function fmtBtc(amount) {
+  var b = amount / btcRate;
+  if (b >= 0.01)   return '₿' + b.toFixed(4);
+  if (b >= 0.001)  return '₿' + b.toFixed(5);
+  if (b >= 0.0001) return '₿' + b.toFixed(6);
+  return '₿' + b.toFixed(8);
+}
+
+function getLabel(amount) {
+  var s = fmtSats(toSats(amount));
+  if (denom === 'btc')  return fmtBtc(amount);
+  if (denom === 'both') return '~' + s + ' / ' + fmtBtc(amount);
+  return '~' + s;
+}
+
+// ── Denomination ──────────────────────────────────────────────
+function setDenom(d) {
+  denom = d;
+  ['sats','btc','both'].forEach(function(k) {
+    var btn = document.getElementById('d-' + k);
+    if (btn) btn.classList.toggle('active', k === d);
+  });
+  renderProducts();
+}
+
+// ── Language ──────────────────────────────────────────────────
+function setLang(l) {
+  lang = l;
+  document.documentElement.lang = l;
+  document.getElementById('btnEN').classList.toggle('active', l === 'en');
+  document.getElementById('btnES').classList.toggle('active', l === 'es');
+
+  var s = T[l];
+  Object.keys(s).forEach(function(id) {
+    if (id === id.toLowerCase() && id.indexOf('-') === -1) return; // skip non-dom keys
+    var el = document.getElementById(id);
+    if (!el) return;
+    if (el.tagName === 'INPUT') el.placeholder = s[id];
+    else el.innerHTML = s[id];
+  });
+
+  // Update modal buttons
+  var pln  = document.getElementById('modalPayLN');
+  var pcard = document.getElementById('modalPayCard');
+  if (pln)   pln.textContent   = s.payLN;
+  if (pcard) pcard.textContent = s.payCard;
+
+  renderProducts();
+}
+
+// ── Render products ───────────────────────────────────────────
 function renderProducts() {
-  var grid = document.getElementById('productGrid');
-  var PRODS = (typeof getCurrentProducts === 'function') ? getCurrentProducts() : PRODUCTS;
-  grid.innerHTML = PRODS.map(function(p) {
-    var sats = toSats(p.price);
+  var grid  = document.getElementById('productGrid');
+  var prods = PRODUCTS[lang] || PRODUCTS.es;
+  var s     = T[lang];
+
+  grid.innerHTML = prods.map(function(p) {
     return [
-      '<div class="product-card" onclick="openProduct('+p.id+')">',
+      '<div class="product-card" onclick="openProduct(' + p.id + ')">',
         '<div class="product-img">',
           p.emoji,
-          p.badge ? '<span class="product-badge">'+p.badge+'</span>' : '',
+          p.badge ? '<span class="product-badge-el">' + p.badge + '</span>' : '',
         '</div>',
         '<div class="product-body">',
-          '<div class="product-name">'+p.name+'</div>',
-          '<div class="product-sku">'+p.sku+'</div>',
+          '<div class="product-name">' + p.name + '</div>',
+          '<div class="product-sku">' + p.sku + '</div>',
           '<div class="product-price-row">',
-            '<span class="product-price">$'+p.price.toLocaleString('es-MX')+'</span>',
-            '<span class="sats-badge">~'+fmt(sats)+'</span>',
+            '<span class="product-price">$' + p.price.toLocaleString('es-MX') + '</span>',
+            '<span class="sats-badge">' + getLabel(p.price) + '</span>',
           '</div>',
-          '<button class="add-to-cart" id="btn-'+p.id+'" onclick="event.stopPropagation();addToCart('+p.id+')">',
-            'Agregar al carrito',
+          '<button class="add-btn" id="btn-' + p.id + '" onclick="event.stopPropagation();addToCart(' + p.id + ')">',
+            s.addCart,
           '</button>',
         '</div>',
       '</div>'
@@ -267,296 +602,122 @@ function renderProducts() {
   }).join('');
 }
 
+// ── Cart ──────────────────────────────────────────────────────
 function addToCart(id) {
-  var p = PRODUCTS.find(function(x){return x.id===id;});
+  var prods = PRODUCTS[lang] || PRODUCTS.es;
+  var p = prods.find(function(x){ return x.id === id; });
   if (!p) return;
   cart.push(p);
   document.getElementById('cartCount').textContent = cart.length;
-  var btn = document.getElementById('btn-'+id);
+
+  var btn = document.getElementById('btn-' + id);
   if (btn) {
-    btn.textContent = '✓ Agregado';
+    btn.textContent = T[lang].added;
     btn.classList.add('added');
     setTimeout(function(){
-      btn.textContent = 'Agregar al carrito';
+      btn.textContent = T[lang].addCart;
       btn.classList.remove('added');
     }, 1500);
   }
-  showNotif(''+p.emoji+' '+p.name+' agregado');
+  showNotif(p.emoji + ' ' + p.name + ' ' + T[lang].notif);
+}
+
+function showCart() {
+  if (cart.length === 0) { showNotif(T[lang].cartEmpty); return; }
+  var total = cart.reduce(function(s, p){ return s + p.price; }, 0);
+  openProductDirect('🛒', T[lang]['l-cart'] || 'Cart', total);
 }
 
 function showNotif(msg) {
   var n = document.getElementById('cartNotif');
-  document.getElementById('cartNotifText').textContent = msg;
+  document.getElementById('notifText').textContent = msg;
   n.classList.add('show');
   setTimeout(function(){ n.classList.remove('show'); }, 2500);
 }
 
-function openCart() {
-  if (cart.length === 0) { showNotif('Tu carrito está vacío'); return; }
-  var total = cart.reduce(function(s,p){return s+p.price;},0);
-  openProduct(null, total);
+// ── Product modal ─────────────────────────────────────────────
+function openProduct(id) {
+  var prods = PRODUCTS[lang] || PRODUCTS.es;
+  var p = prods.find(function(x){ return x.id === id; });
+  if (!p) return;
+  currentProduct = p;
+  openProductDirect(p.emoji, p.name, p.price);
 }
 
-function openProduct(id, cartTotal) {
-  var p = id ? PRODUCTS.find(function(x){return x.id===id;}) : null;
-  var amount = p ? p.price : cartTotal;
-  var name   = p ? p.name  : 'Carrito ('+cart.length+' productos)';
-  var emoji  = p ? p.emoji : '🛒';
+function openProductDirect(emoji, name, price) {
+  currentProduct = { emoji: emoji, name: name, price: price };
+  document.getElementById('modalEmoji').textContent = emoji;
+  document.getElementById('modalTitle').textContent = name;
+  document.getElementById('modalPrice').textContent = '$' + price.toLocaleString('es-MX');
+  document.getElementById('modalBadge').textContent = getLabel(price);
+  document.getElementById('modalRate').textContent  = '1 BTC = $' + Math.round(btcRate).toLocaleString('es-MX') + ' MXN';
 
-  var modal = document.createElement('div');
-  modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:999;display:flex;align-items:center;justify-content:center;padding:20px';
+  var s = T[lang];
+  document.getElementById('modalPayLN').textContent   = s.payLN;
+  document.getElementById('modalPayCard').textContent = s.payCard;
+  document.getElementById('l-no-wallet').textContent  = s['l-no-wallet'];
 
-  var sats = toSats(amount);
-
-  modal.innerHTML = [
-    '<div style="background:#fff;border-radius:16px;max-width:480px;width:100%;max-height:90vh;overflow-y:auto">',
-      '<div style="padding:24px;border-bottom:1px solid #eee;display:flex;align-items:center;justify-content:space-between">',
-        '<span style="font-size:16px;font-weight:700">'+name+'</span>',
-        '<button onclick="this.closest(\'[style*=fixed]\').remove()" style="background:none;border:none;font-size:22px;cursor:pointer;color:#888">×</button>',
-      '</div>',
-      '<div style="padding:24px">',
-        '<div style="text-align:center;font-size:64px;margin-bottom:16px">'+emoji+'</div>',
-        '<div style="display:flex;align-items:baseline;justify-content:center;gap:10px;margin-bottom:8px;flex-wrap:wrap">',
-          '<span style="font-size:32px;font-weight:800">$'+amount.toLocaleString('es-MX')+'</span>',
-          '<span style="background:var(--btc-l);border:1px solid var(--btc-b);border-radius:6px;padding:4px 10px;font-size:14px;font-weight:700;color:var(--btc)">'+getLabel(amount)+'</span>',
-        '</div>',
-        '<div style="font-size:12px;color:#aaa;text-align:center;margin-bottom:24px">1 BTC = $'+Math.round(btcRate).toLocaleString('es-MX')+' MXN</div>',
-
-        '<button onclick="payLightning('+amount+',\''+name+'\')" style="width:100%;background:#F7931A;color:#fff;border:none;border-radius:10px;padding:16px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:10px">',
-          '⚡ Pagar con Lightning',
-        '</button>',
-        '<button style="width:100%;background:#111;color:#fff;border:none;border-radius:10px;padding:14px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;margin-bottom:10px">',
-          '💳 Pagar con tarjeta',
-        '</button>',
-
-        '<div style="margin-top:20px;padding-top:16px;border-top:1px solid #eee">',
-          '<div style="font-size:11px;color:#aaa;text-align:center;margin-bottom:10px">¿No tienes wallet Lightning?</div>',
-          '<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">',
-            '<a href="https://www.walletofsatoshi.com" target="_blank" style="background:#f5f5f5;border:1px solid #e8e8e8;border-radius:7px;padding:7px 12px;text-decoration:none;color:#333;font-size:12px;font-weight:600;display:flex;align-items:center;gap:5px">🟠 Wallet of Satoshi</a>',
-            '<a href="https://strike.me" target="_blank" style="background:#f5f5f5;border:1px solid #e8e8e8;border-radius:7px;padding:7px 12px;text-decoration:none;color:#333;font-size:12px;font-weight:600;display:flex;align-items:center;gap:5px">⚡ Strike</a>',
-            '<a href="how-to-pay.html" target="_blank" style="background:#F7931A;color:#fff;border:none;border-radius:7px;padding:7px 14px;text-decoration:none;font-size:12px;font-weight:700">⚡ Guía paso a paso →</a>',
-          '</div>',
-        '</div>',
-      '</div>',
-    '</div>'
-  ].join('');
-
-  modal.addEventListener('click', function(e){ if(e.target===modal) modal.remove(); });
-  document.body.appendChild(modal);
+  document.getElementById('productModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
 }
 
-function payLightning(amount, name) {
-  var sats  = toSats(amount);
-  var lnurl = 'lightning:'+LIGHTNING;
-  var qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=180x180&data='+encodeURIComponent(lnurl);
+document.getElementById('modalPayLN').addEventListener('click', function() {
+  if (!currentProduct) return;
+  closeModal('productModal');
+  openLightning(currentProduct.price, currentProduct.name);
+});
 
-  var existing = document.querySelector('[data-lightning-modal]');
-  if (existing) existing.remove();
+document.getElementById('modalPayCard').addEventListener('click', function() {
+  showNotif('Card payment — demo only');
+  closeModal('productModal');
+});
 
-  var modal = document.createElement('div');
-  modal.setAttribute('data-lightning-modal','1');
-  modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px';
+// ── Lightning modal ───────────────────────────────────────────
+function openLightning(price, name) {
+  var sats = toSats(price);
+  var s    = T[lang];
+  document.getElementById('lnSats').textContent = '~' + fmtSats(sats);
+  document.getElementById('lnFiat').textContent = '$' + price.toLocaleString('es-MX') + ' MXN · ' + name;
+  document.getElementById('l-ln-title').textContent = s['l-ln-title'];
+  document.getElementById('l-ln-close').textContent = s['l-ln-close'];
 
-  modal.innerHTML = [
-    '<div style="background:#111;border:1px solid #2a2a2a;border-top:3px solid #F7931A;border-radius:14px;padding:32px;max-width:320px;width:100%;text-align:center;font-family:inherit">',
-      '<div style="font-size:15px;font-weight:700;color:#F7931A;margin-bottom:16px">⚡ Pagar con Lightning</div>',
-      '<div style="font-size:30px;font-weight:800;color:#F7931A;letter-spacing:-0.5px">'+fmt(sats)+'</div>',
-      '<div style="font-size:13px;color:#666;margin:6px 0 20px">$'+amount.toLocaleString('es-MX')+' MXN · '+name+'</div>',
-      '<div style="width:180px;height:180px;background:#fff;border-radius:10px;margin:0 auto 14px;overflow:hidden">',
-        '<img src="'+qrUrl+'" width="180" height="180" alt="Lightning QR"/>',
-      '</div>',
-      '<div style="font-size:11px;color:#555;font-family:monospace;word-break:break-all;margin-bottom:18px">'+LIGHTNING+'</div>',
+  var lnurl = 'lightning:' + LIGHTNING;
+  document.getElementById('lnQR').src =
+    'https://api.qrserver.com/v1/create-qr-code/?size=170x170&data=' + encodeURIComponent(lnurl);
 
-      '<div style="margin-bottom:16px;padding:12px;background:#1a1a1a;border-radius:8px">',
-        '<div style="font-size:11px;color:#555;margin-bottom:8px">¿No tienes wallet Lightning?</div>',
-        '<div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap">',
-          '<a href="https://www.walletofsatoshi.com" target="_blank" style="background:#222;border:1px solid #333;border-radius:6px;padding:6px 10px;text-decoration:none;color:#ccc;font-size:11px;font-weight:600">🟠 Wallet of Satoshi</a>',
-          '<a href="https://strike.me" target="_blank" style="background:#222;border:1px solid #333;border-radius:6px;padding:6px 10px;text-decoration:none;color:#ccc;font-size:11px;font-weight:600">⚡ Strike</a>',
-          '<a href="https://muun.com" target="_blank" style="background:#222;border:1px solid #333;border-radius:6px;padding:6px 10px;text-decoration:none;color:#ccc;font-size:11px;font-weight:600">🔒 Muun</a>',
-        '</div>',
-      '</div>',
-
-      '<button onclick="this.closest(\'[data-lightning-modal]\').remove()" style="width:100%;background:#1a1a1a;border:1px solid #2a2a2a;color:#777;border-radius:8px;padding:11px;font-size:13px;cursor:pointer;font-family:inherit;transition:all .15s">Cerrar</button>',
-    '</div>'
-  ].join('');
-
-  modal.addEventListener('click', function(e){ if(e.target===modal) modal.remove(); });
-  document.body.appendChild(modal);
+  document.getElementById('lnModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
 }
 
-// ── Bilingual strings ──────────────
-var storeLang = 'es';
-
-var STORE_STR = {
-  es: {
-    search: 'Buscar productos...',
-    cart: '🛒 Carrito',
-    cartEmpty: 'Tu carrito está vacío',
-    navHome: 'Inicio', navCatalog: 'Catálogo', navHow: '¿Cómo pagar con Bitcoin?', navAbout: 'Nosotros',
-    heroTitle: 'Productos de calidad.<br>Paga en <em>sats</em>.',
-    heroSub: 'Descubre nuestra colección y paga como prefieras — con tarjeta, transferencia, o Bitcoin Lightning al instante.',
-    heroCta1: 'Ver catálogo', heroCta2: '¿Cómo pago con Bitcoin?',
-    heroTag: '⚡ Aceptamos Bitcoin Lightning',
-    secTitle: 'Catálogo', secLink: 'Ver todos →',
-    addCart: 'Agregar al carrito', added: '✓ Agregado',
-    payLightning: '⚡ Pagar con Lightning', payCard: '💳 Pagar con tarjeta',
-    noWallet: '¿No tienes wallet Lightning?', close: 'Cerrar',
-    btcStrip: '⚡ Paga con Bitcoin Lightning',
-    btcStripSub: 'Instantáneo, sin comisiones bancarias, disponible desde cualquier parte del mundo.',
-    howLabel: '⚡ ¿Cómo pago con Bitcoin Lightning?',
-    howSub: 'Descarga una wallet gratis y paga en segundos.',
-    howBtn: 'Ver guía paso a paso →',
-    demoLabel: 'Esta es una tienda de demostración',
-    showIn: 'Mostrar en:',
-    footer: 'SATUNO Store Demo',
-    lightning: 'Bitcoin Lightning accepted',
-  },
-  en: {
-    search: 'Search products...',
-    cart: '🛒 Cart',
-    cartEmpty: 'Your cart is empty',
-    navHome: 'Home', navCatalog: 'Catalog', navHow: 'How to pay with Bitcoin?', navAbout: 'About',
-    heroTitle: 'Quality products.<br>Pay in <em>sats</em>.',
-    heroSub: 'Explore our collection and pay however you like — card, bank transfer, or instant Bitcoin Lightning.',
-    heroCta1: 'Browse catalog', heroCta2: 'How do I pay with Bitcoin?',
-    heroTag: '⚡ We accept Bitcoin Lightning',
-    secTitle: 'Catalog', secLink: 'View all →',
-    addCart: 'Add to cart', added: '✓ Added',
-    payLightning: '⚡ Pay with Lightning', payCard: '💳 Pay with card',
-    noWallet: "Don\'t have a Lightning wallet?", close: 'Close',
-    btcStrip: '⚡ Pay with Bitcoin Lightning',
-    btcStripSub: 'Instant, no bank fees, available from anywhere in the world.',
-    howLabel: '⚡ How do I pay with Bitcoin Lightning?',
-    howSub: 'Download a free wallet and pay in seconds.',
-    howBtn: 'View step-by-step guide →',
-    demoLabel: 'This is a demo store',
-    showIn: 'Show in:',
-    footer: 'SATUNO Store Demo',
-    lightning: 'Bitcoin Lightning accepted',
-  }
-};
-
-var PRODUCTS_ES = [
-  { id:1, name:'Auriculares Inalámbricos Pro', price:1299, emoji:'🎧', badge:'NUEVO', sku:'AUD-001' },
-  { id:2, name:'Smartwatch Series X',          price:2899, emoji:'⌚', badge:'TOP',   sku:'SWT-002' },
-  { id:3, name:'Teclado Mecánico RGB',          price:899,  emoji:'⌨️', badge:null,   sku:'TEC-003' },
-  { id:4, name:'Cámara Web 4K',                price:1599, emoji:'📷', badge:'OFERTA',sku:'CAM-004' },
-  { id:5, name:'Bocina Portátil Waterproof',    price:649,  emoji:'🔊', badge:null,   sku:'BOC-005' },
-  { id:6, name:'Mochila Tech Premium',          price:799,  emoji:'🎒', badge:'NUEVO', sku:'MCH-006' },
-];
-
-var PRODUCTS_EN = [
-  { id:1, name:'Pro Wireless Headphones',   price:1299, emoji:'🎧', badge:'NEW',  sku:'AUD-001' },
-  { id:2, name:'Smartwatch Series X',       price:2899, emoji:'⌚', badge:'TOP',  sku:'SWT-002' },
-  { id:3, name:'Mechanical RGB Keyboard',   price:899,  emoji:'⌨️', badge:null,   sku:'TEC-003' },
-  { id:4, name:'4K Webcam',                 price:1599, emoji:'📷', badge:'SALE', sku:'CAM-004' },
-  { id:5, name:'Waterproof Portable Speaker',price:649, emoji:'🔊', badge:null,   sku:'BOC-005' },
-  { id:6, name:'Premium Tech Backpack',     price:799,  emoji:'🎒', badge:'NEW',  sku:'MCH-006' },
-];
-
-function getCurrentProducts() {
-  return storeLang === 'en' ? PRODUCTS_EN : PRODUCTS_ES;
+// ── Close modals ──────────────────────────────────────────────
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+  document.body.style.overflow = '';
 }
 
-function toggleLang() {
-  storeLang = storeLang === 'es' ? 'en' : 'es';
-  applyLang();
-}
-
-function applyLang() {
-  var s = STORE_STR[storeLang];
-  var isEn = storeLang === 'en';
-
-  var lt = document.getElementById('langToggle');
-  if (lt) lt.textContent = isEn ? 'ES' : 'EN';
-  var sil = document.getElementById('showInLabel');
-  if (sil) sil.textContent = isEn ? 'Show in:' : 'Mostrar en:';
-  document.documentElement.lang = storeLang;
-
-  // Search placeholder
-  var sp = document.getElementById('searchPlaceholder');
-  if (sp) sp.placeholder = s.search;
-
-  // Cart label
-  var cl = document.getElementById('cartLabel');
-  if (cl) cl.textContent = s.cart;
-
-  // Nav links
-  var navLinks = document.querySelectorAll('.nav-link');
-  var navKeys = ['navHome','navCatalog','navHow','navAbout'];
-  navLinks.forEach(function(el, i) { if (navKeys[i]) el.textContent = s[navKeys[i]]; });
-
-  // Hero
-  var ht = document.getElementById('heroTitle');
-  if (ht) ht.innerHTML = s.heroTitle;
-  var hs = document.getElementById('heroSub');
-  if (hs) hs.textContent = s.heroSub;
-  var hc1 = document.getElementById('heroCta1');
-  if (hc1) hc1.textContent = s.heroCta1;
-  var hc2 = document.getElementById('heroCta2');
-  if (hc2) hc2.textContent = s.heroCta2;
-  var htag = document.getElementById('heroTag');
-  if (htag) htag.textContent = s.heroTag;
-
-  // Section
-  var st = document.getElementById('sectionTitle');
-  if (st) st.textContent = s.secTitle;
-  var sl = document.getElementById('sectionLink');
-  if (sl) sl.textContent = s.secLink;
-
-  // How to pay strip
-  var hl = document.getElementById('howLabel');
-  if (hl) hl.textContent = s.howLabel;
-  var hb = document.getElementById('howBtn');
-  if (hb) hb.textContent = s.howBtn;
-  var hsub = document.getElementById('howSub');
-  if (hsub) hsub.textContent = s.howSub;
-
-  // btcStrip
-  var bs = document.getElementById('btcStripTitle');
-  if (bs) bs.textContent = s.btcStrip;
-  var bss = document.getElementById('btcStripSub');
-  if (bss) bss.textContent = s.btcStripSub;
-
-  // Re-render products with new language
-  if (btcRate) renderProducts();
-}
-
-// ── Denomination ──────────────────
-// ── Denomination ──────────────────
-var currentDenom = 'sats';
-
-function setDenom(d) {
-  currentDenom = d;
-  ['sats','btc','both'].forEach(function(k) {
-    var btn = document.getElementById('d-'+k);
-    if (!btn) return;
-    btn.style.background = k===d ? '#F7931A' : 'rgba(255,255,255,.1)';
-    btn.style.color      = k===d ? '#fff'    : 'rgba(255,255,255,.6)';
+document.querySelectorAll('.modal-overlay').forEach(function(overlay) {
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay) closeModal(overlay.id);
   });
-  if (btcRate) renderProducts();
-}
+});
 
-function fmtBtc(amount) {
-  var b = amount / btcRate;
-  return '₿' + (b >= 0.01 ? b.toFixed(4) : b >= 0.001 ? b.toFixed(5) : b >= 0.0001 ? b.toFixed(6) : b.toFixed(8));
-}
-
-function getLabel(amount) {
-  var s = fmt(toSats(amount));
-  if (currentDenom === 'btc')  return fmtBtc(amount);
-  if (currentDenom === 'both') return '~'+s+' / '+fmtBtc(amount);
-  return '~'+s;
-}
-
-// ── Fetch live BTC rate ──────────────
+// ── Fetch BTC rate ────────────────────────────────────────────
 fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=mxn')
-  .then(function(r){return r.json();})
+  .then(function(r){ return r.json(); })
   .then(function(d){
-    if(d&&d.bitcoin&&d.bitcoin.mxn){ btcRate=d.bitcoin.mxn; }
+    if (d && d.bitcoin && d.bitcoin.mxn) {
+      btcRate    = d.bitcoin.mxn;
+      rateLoaded = true;
+    }
     renderProducts();
   })
-  .catch(function(){ renderProducts(); });
+  .catch(function(){
+    renderProducts(); // use fallback rate
+  });
+
+// ── Init ──────────────────────────────────────────────────────
+setLang('es');
+setDenom('sats');
 </script>
 </body>
 </html>

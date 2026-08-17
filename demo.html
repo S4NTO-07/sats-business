@@ -7,7 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--btc:#FFBA00;--btc-l:rgba(255,186,0,0.1);--btc-b:rgba(255,186,0,0.22);--bg:#f8f8f6;--white:#fff;--text:#1a1a1a;--muted:#888;--line:#e8e8e8;--green:#16a34a}
+:root{--btc:#F7931A;--btc-l:rgba(247,147,26,0.1);--btc-b:rgba(247,147,26,0.22);--bg:#f8f8f6;--white:#fff;--text:#1a1a1a;--muted:#888;--line:#e8e8e8;--green:#16a34a}
 body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:15px}
 .store-nav{background:var(--white);border-bottom:1px solid var(--line);padding:14px 32px;display:flex;align-items:center;justify-content:space-between}
 .store-logo{font-size:20px;font-weight:800;letter-spacing:-0.5px}
@@ -90,7 +90,7 @@ body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',-apple-s
 
 .sats-banner{background:linear-gradient(135deg,#0D0D0D,#1a1208);border-radius:12px;padding:16px 20px;margin-bottom:16px;display:flex;align-items:center;gap:12px}
 .sats-banner-icon{font-size:24px}
-.sats-banner-text strong{color:#FFBA00;font-size:14px;display:block;margin-bottom:2px}
+.sats-banner-text strong{color:#F7931A;font-size:14px;display:block;margin-bottom:2px}
 .sats-banner-text{font-size:12px;color:#888}
 .variant-label{font-size:12px;font-weight:600;margin-bottom:8px;margin-top:16px}
 .variants{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
@@ -124,7 +124,7 @@ body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',-apple-s
 <div style="background:#1a1a1a;border-bottom:1px solid #2a2a2a;padding:10px 32px;display:flex;align-items:center;gap:12px">
   <span style="font-size:12px;color:#666;font-weight:600">SATUNO Business demo:</span>
   <div style="display:flex;gap:6px">
-    <button onclick="setDenom('sats')"  id="d-sats" style="background:#FFBA00;color:#fff;border:none;border-radius:6px;padding:5px 12px;font-size:12px;font-weight:700;cursor:pointer">⚡ sats</button>
+    <button onclick="setDenom('sats')"  id="d-sats" style="background:#F7931A;color:#fff;border:none;border-radius:6px;padding:5px 12px;font-size:12px;font-weight:700;cursor:pointer">⚡ sats</button>
     <button onclick="setDenom('btc')"   id="d-btc"  style="background:#222;color:#888;border:1px solid #333;border-radius:6px;padding:5px 12px;font-size:12px;font-weight:700;cursor:pointer">₿ BTC</button>
     <button onclick="setDenom('both')"  id="d-both" style="background:#222;color:#888;border:1px solid #333;border-radius:6px;padding:5px 12px;font-size:12px;font-weight:700;cursor:pointer">+ Both</button>
   </div>
@@ -294,7 +294,7 @@ function renderAll() {
   var bar = document.getElementById('loadingBar');
   bar.innerHTML = '⚡ 1 BTC = $' + Math.round(btcRate).toLocaleString('es-MX') +
                   ' MXN · Actualizado hace un momento';
-  bar.style.background = 'rgba(255,186,0,0.06)';
+  bar.style.background = 'rgba(247,147,26,0.06)';
 }
 
 // Fetch live rate
@@ -349,7 +349,7 @@ function setDenom(denom) {
   Object.keys(btns).forEach(function(k) {
     var btn = document.getElementById(btns[k]);
     if (k === denom) {
-      btn.style.background = '#FFBA00';
+      btn.style.background = '#F7931A';
       btn.style.color = '#fff';
       btn.style.border = 'none';
     } else {

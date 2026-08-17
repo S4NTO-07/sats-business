@@ -9,14 +9,14 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --btc:#FFBA00;--btc-l:rgba(255,186,0,0.09);--btc-b:rgba(255,186,0,0.22);
+  --btc:#F7931A;--btc-l:rgba(247,147,26,0.09);--btc-b:rgba(247,147,26,0.22);
   --bg:#f7f7f5;--white:#ffffff;--text:#111;--muted:#888;--line:#e8e8e6;
   --green:#16a34a;--accent:#111;
 }
 body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:15px;line-height:1.5}
 
 /* ── Demo banner ── */
-.demo-banner{background:#111;color:#FFBA00;padding:9px 20px;text-align:center;font-size:12px;font-weight:600;letter-spacing:.3px;display:flex;align-items:center;justify-content:center;gap:8px}
+.demo-banner{background:#111;color:#F7931A;padding:9px 20px;text-align:center;font-size:12px;font-weight:600;letter-spacing:.3px;display:flex;align-items:center;justify-content:center;gap:8px}
 .demo-banner a{color:#fff;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.3)}
 
 /* ── Nav ── */
@@ -42,7 +42,7 @@ nav{background:var(--white);border-bottom:1px solid var(--line);padding:0 40px;h
 .hero-btn:hover{opacity:.88}
 .hero-btn-sec{background:transparent;border:1px solid rgba(255,255,255,.2);color:#fff;border-radius:10px;padding:13px 28px;font-size:15px;cursor:pointer;font-family:inherit;transition:all .15s;text-decoration:none;display:inline-block}
 .hero-btn-sec:hover{border-color:rgba(255,255,255,.5)}
-.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,186,0,.12);border:1px solid var(--btc-b);border-radius:20px;padding:5px 14px;font-size:12px;font-weight:600;color:var(--btc);margin-bottom:18px}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(247,147,26,.12);border:1px solid var(--btc-b);border-radius:20px;padding:5px 14px;font-size:12px;font-weight:600;color:var(--btc);margin-bottom:18px}
 .hero-visual{font-size:120px;flex-shrink:0;line-height:1}
 
 /* ── Section ── */
@@ -151,7 +151,7 @@ footer a{color:var(--btc);text-decoration:none}
     <div style="font-size:13px;color:#888">Descarga una wallet gratis y paga en segundos. Sin cuenta bancaria, sin fronteras.</div>
   </div>
   <a href="how-to-pay.html"
-     style="display:inline-flex;align-items:center;gap:8px;background:#FFBA00;color:#fff;text-decoration:none;border-radius:10px;padding:12px 22px;font-size:14px;font-weight:700;white-space:nowrap;flex-shrink:0">
+     style="display:inline-flex;align-items:center;gap:8px;background:#F7931A;color:#fff;text-decoration:none;border-radius:10px;padding:12px 22px;font-size:14px;font-weight:700;white-space:nowrap;flex-shrink:0">
     Ver guía paso a paso →
   </a>
 </div>
@@ -282,7 +282,7 @@ function openProduct(id, cartTotal) {
         '</div>',
         '<div style="font-size:12px;color:#aaa;text-align:center;margin-bottom:24px">1 BTC = $'+Math.round(btcRate).toLocaleString('es-MX')+' MXN</div>',
 
-        '<button onclick="payLightning('+amount+',\''+name+'\')" style="width:100%;background:#FFBA00;color:#fff;border:none;border-radius:10px;padding:16px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:10px">',
+        '<button onclick="payLightning('+amount+',\''+name+'\')" style="width:100%;background:#F7931A;color:#fff;border:none;border-radius:10px;padding:16px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:10px">',
           '⚡ Pagar con Lightning',
         '</button>',
         '<button style="width:100%;background:#111;color:#fff;border:none;border-radius:10px;padding:14px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;margin-bottom:10px">',
@@ -294,7 +294,7 @@ function openProduct(id, cartTotal) {
           '<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">',
             '<a href="https://www.walletofsatoshi.com" target="_blank" style="background:#f5f5f5;border:1px solid #e8e8e8;border-radius:7px;padding:7px 12px;text-decoration:none;color:#333;font-size:12px;font-weight:600;display:flex;align-items:center;gap:5px">🟠 Wallet of Satoshi</a>',
             '<a href="https://strike.me" target="_blank" style="background:#f5f5f5;border:1px solid #e8e8e8;border-radius:7px;padding:7px 12px;text-decoration:none;color:#333;font-size:12px;font-weight:600;display:flex;align-items:center;gap:5px">⚡ Strike</a>',
-            '<a href="how-to-pay.html" target="_blank" style="background:#f5f5f5;border:1px solid #e8e8e8;border-radius:7px;padding:7px 12px;text-decoration:none;color:#FFBA00;font-size:12px;font-weight:600">Ver guía →</a>',
+            '<a href="how-to-pay.html" target="_blank" style="background:#f5f5f5;border:1px solid #e8e8e8;border-radius:7px;padding:7px 12px;text-decoration:none;color:#F7931A;font-size:12px;font-weight:600">Ver guía →</a>',
           '</div>',
         '</div>',
       '</div>',
@@ -318,9 +318,9 @@ function payLightning(amount, name) {
   modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px';
 
   modal.innerHTML = [
-    '<div style="background:#111;border:1px solid #2a2a2a;border-top:3px solid #FFBA00;border-radius:14px;padding:32px;max-width:320px;width:100%;text-align:center;font-family:inherit">',
-      '<div style="font-size:15px;font-weight:700;color:#FFBA00;margin-bottom:16px">⚡ Pagar con Lightning</div>',
-      '<div style="font-size:30px;font-weight:800;color:#FFBA00;letter-spacing:-0.5px">'+fmt(sats)+'</div>',
+    '<div style="background:#111;border:1px solid #2a2a2a;border-top:3px solid #F7931A;border-radius:14px;padding:32px;max-width:320px;width:100%;text-align:center;font-family:inherit">',
+      '<div style="font-size:15px;font-weight:700;color:#F7931A;margin-bottom:16px">⚡ Pagar con Lightning</div>',
+      '<div style="font-size:30px;font-weight:800;color:#F7931A;letter-spacing:-0.5px">'+fmt(sats)+'</div>',
       '<div style="font-size:13px;color:#666;margin:6px 0 20px">$'+amount.toLocaleString('es-MX')+' MXN · '+name+'</div>',
       '<div style="width:180px;height:180px;background:#fff;border-radius:10px;margin:0 auto 14px;overflow:hidden">',
         '<img src="'+qrUrl+'" width="180" height="180" alt="Lightning QR"/>',

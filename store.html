@@ -111,10 +111,17 @@ footer a{color:var(--btc);text-decoration:none}
   ⚡ ¿Cómo pago con Bitcoin?
 </a>
 
-<div class="demo-banner">
-  ⚡ Esta es una tienda de demostración —
-  <a href="index.html">Conoce SATUNO Business</a>
-  &nbsp;para instalar esto en tu tienda
+<div class="demo-banner" style="justify-content:space-between;flex-wrap:wrap;gap:10px">
+  <span>⚡ Tienda demo — <a href="index.html">Conoce SATUNO Business</a></span>
+  <div style="display:flex;align-items:center;gap:6px">
+    <span style="font-size:11px;color:rgba(255,255,255,.5)">Mostrar en:</span>
+    <button onclick="setDenom('sats')" id="d-sats"
+      style="background:#F7931A;color:#fff;border:none;border-radius:6px;padding:4px 10px;font-size:11px;font-weight:700;cursor:pointer">⚡ sats</button>
+    <button onclick="setDenom('btc')" id="d-btc"
+      style="background:rgba(255,255,255,.1);color:rgba(255,255,255,.6);border:none;border-radius:6px;padding:4px 10px;font-size:11px;font-weight:700;cursor:pointer">₿ BTC</button>
+    <button onclick="setDenom('both')" id="d-both"
+      style="background:rgba(255,255,255,.1);color:rgba(255,255,255,.6);border:none;border-radius:6px;padding:4px 10px;font-size:11px;font-weight:700;cursor:pointer">+ Ambos</button>
+  </div>
 </div>
 
 <!-- Nav -->
@@ -292,7 +299,7 @@ function openProduct(id, cartTotal) {
         '<div style="text-align:center;font-size:64px;margin-bottom:16px">'+emoji+'</div>',
         '<div style="display:flex;align-items:baseline;justify-content:center;gap:10px;margin-bottom:8px;flex-wrap:wrap">',
           '<span style="font-size:32px;font-weight:800">$'+amount.toLocaleString('es-MX')+'</span>',
-          '<span style="background:var(--btc-l);border:1px solid var(--btc-b);border-radius:6px;padding:4px 10px;font-size:14px;font-weight:700;color:var(--btc)">~'+fmt(sats)+'</span>',
+          '<span style="background:var(--btc-l);border:1px solid var(--btc-b);border-radius:6px;padding:4px 10px;font-size:14px;font-weight:700;color:var(--btc)">'+getLabel(amount)+'</span>',
         '</div>',
         '<div style="font-size:12px;color:#aaa;text-align:center;margin-bottom:24px">1 BTC = $'+Math.round(btcRate).toLocaleString('es-MX')+' MXN</div>',
 
@@ -358,7 +365,33 @@ function payLightning(amount, name) {
   document.body.appendChild(modal);
 }
 
-// Fetch live BTC rate
+// ── Denomination ──────────────────
+var currentDenom = 'sats';
+
+function setDenom(d) {
+  currentDenom = d;
+  ['sats','btc','both'].forEach(function(k) {
+    var btn = document.getElementById('d-'+k);
+    if (!btn) return;
+    btn.style.background = k===d ? '#F7931A' : 'rgba(255,255,255,.1)';
+    btn.style.color      = k===d ? '#fff'    : 'rgba(255,255,255,.6)';
+  });
+  if (btcRate) renderProducts();
+}
+
+function fmtBtc(amount) {
+  var b = amount / btcRate;
+  return '₿' + (b >= 0.01 ? b.toFixed(4) : b >= 0.001 ? b.toFixed(5) : b >= 0.0001 ? b.toFixed(6) : b.toFixed(8));
+}
+
+function getLabel(amount) {
+  var s = fmt(toSats(amount));
+  if (currentDenom === 'btc')  return fmtBtc(amount);
+  if (currentDenom === 'both') return '~'+s+' / '+fmtBtc(amount);
+  return '~'+s;
+}
+
+// ── Fetch live BTC rate ──────────────
 fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=mxn')
   .then(function(r){return r.json();})
   .then(function(d){

@@ -112,15 +112,31 @@ footer a{color:var(--btc);text-decoration:none}
 </a>
 
 <div class="demo-banner" style="justify-content:space-between;flex-wrap:wrap;gap:10px">
-  <span>⚡ Tienda demo — <a href="index.html">Conoce SATUNO Business</a></span>
-  <div style="display:flex;align-items:center;gap:6px">
-    <span style="font-size:11px;color:rgba(255,255,255,.5)">Mostrar en:</span>
-    <button onclick="setDenom('sats')" id="d-sats"
-      style="background:#F7931A;color:#fff;border:none;border-radius:6px;padding:4px 10px;font-size:11px;font-weight:700;cursor:pointer">⚡ sats</button>
-    <button onclick="setDenom('btc')" id="d-btc"
-      style="background:rgba(255,255,255,.1);color:rgba(255,255,255,.6);border:none;border-radius:6px;padding:4px 10px;font-size:11px;font-weight:700;cursor:pointer">₿ BTC</button>
-    <button onclick="setDenom('both')" id="d-both"
-      style="background:rgba(255,255,255,.1);color:rgba(255,255,255,.6);border:none;border-radius:6px;padding:4px 10px;font-size:11px;font-weight:700;cursor:pointer">+ Ambos</button>
+  <span>⚡ Demo — <a href="index.html">SATUNO Business</a></span>
+  <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+
+    <!-- Lang toggle -->
+    <div style="display:flex;align-items:center;gap:4px">
+      <span style="font-size:10px;color:rgba(255,255,255,.4)">🌐</span>
+      <button onclick="toggleLang()" id="langToggle"
+        style="background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:5px;padding:3px 10px;font-size:11px;font-weight:700;cursor:pointer;transition:all .15s">
+        EN
+      </button>
+    </div>
+
+    <div style="width:1px;height:14px;background:rgba(255,255,255,.15)"></div>
+
+    <!-- Denomination toggle -->
+    <div style="display:flex;align-items:center;gap:4px">
+      <span style="font-size:10px;color:rgba(255,255,255,.4)" id="showInLabel">Mostrar en:</span>
+      <button onclick="setDenom('sats')" id="d-sats"
+        style="background:#F7931A;color:#fff;border:none;border-radius:5px;padding:3px 9px;font-size:11px;font-weight:700;cursor:pointer">⚡ sats</button>
+      <button onclick="setDenom('btc')" id="d-btc"
+        style="background:rgba(255,255,255,.1);color:rgba(255,255,255,.6);border:none;border-radius:5px;padding:3px 9px;font-size:11px;font-weight:700;cursor:pointer">₿ BTC</button>
+      <button onclick="setDenom('both')" id="d-both"
+        style="background:rgba(255,255,255,.1);color:rgba(255,255,255,.6);border:none;border-radius:5px;padding:3px 9px;font-size:11px;font-weight:700;cursor:pointer">+ Both</button>
+    </div>
+
   </div>
 </div>
 
@@ -135,11 +151,7 @@ footer a{color:var(--btc);text-decoration:none}
   </div>
   <div class="nav-right">
     <input class="nav-search" id="searchPlaceholder" placeholder="Buscar productos..." readonly/>
-    <button class="lang-toggle" onclick="toggleLang()" id="langToggle"
-      style="background:var(--bg);border:1px solid var(--line);border-radius:7px;padding:7px 12px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;color:var(--muted);transition:all .15s">
-      EN
-    </button>
-    <button class="cart-btn" onclick="openCart()">
+<button class="cart-btn" onclick="openCart()">
       <span id="cartLabel">🛒 Carrito</span> <span class="cart-count" id="cartCount">0</span>
     </button>
   </div>
@@ -455,7 +467,10 @@ function applyLang() {
   var s = STORE_STR[storeLang];
   var isEn = storeLang === 'en';
 
-  document.getElementById('langToggle').textContent = isEn ? 'ES' : 'EN';
+  var lt = document.getElementById('langToggle');
+  if (lt) lt.textContent = isEn ? 'ES' : 'EN';
+  var sil = document.getElementById('showInLabel');
+  if (sil) sil.textContent = isEn ? 'Show in:' : 'Mostrar en:';
   document.documentElement.lang = storeLang;
 
   // Search placeholder

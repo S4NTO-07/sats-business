@@ -9,9 +9,9 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --btc:#F7931A;--btc-l:rgba(247,147,26,0.1);--btc-b:rgba(247,147,26,0.22);
+  --btc:#FF8A00;--btc-l:rgba(255,138,0,0.1);--btc-b:rgba(255,138,0,0.22);
   --bg:#f7f7f5;--white:#fff;--text:#111;--muted:#888;--line:#e8e8e6;
-  --green:#16a34a;--dark:#0D0D0D;
+  --green:#16a34a;--dark:#121212;
 }
 body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',system-ui,sans-serif;font-size:15px;line-height:1.5}
 
@@ -65,7 +65,7 @@ nav{
 
 /* ── Hero ── */
 .hero{
-  background:linear-gradient(135deg,#0D0D0D 0%,#1a1208 100%);
+  background:linear-gradient(135deg,#121212 0%,#1a1208 100%);
   color:#fff;padding:60px 32px;
   display:flex;align-items:center;justify-content:space-between;gap:32px;
 }
@@ -123,7 +123,7 @@ nav{
   border-radius:7px;padding:8px;font-size:12px;font-weight:600;
   cursor:pointer;font-family:inherit;transition:all .15s;
 }
-.add-btn:hover{background:#222}
+.add-btn:hover{background:#1E1C1A}
 .add-btn.added{background:var(--green)}
 
 /* ── How to pay strip ── */
@@ -142,7 +142,7 @@ nav{
 
 /* ── BTC Strip ── */
 .btc-strip{
-  background:linear-gradient(135deg,#0D0D0D,#1a1208);
+  background:linear-gradient(135deg,#121212,#1a1208);
   padding:36px 32px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;
 }
 .btc-strip h2{font-size:20px;font-weight:700;color:#fff;margin-bottom:6px}
@@ -163,7 +163,7 @@ nav{
   background:var(--btc);color:#fff;text-decoration:none;
   border-radius:50px;padding:10px 18px;
   font-size:12px;font-weight:700;
-  box-shadow:0 4px 18px rgba(247,147,26,.4);
+  box-shadow:0 4px 18px rgba(255,138,0,.4);
   font-family:inherit;transition:opacity .15s;
 }
 .float-btn:hover{opacity:.88}
@@ -226,25 +226,25 @@ nav{
 
 /* ── Lightning modal ── */
 .ln-modal-box{
-  background:#111;border:1px solid #2a2a2a;border-top:3px solid var(--btc);
+  background:#111;border:1px solid #2A2520;border-top:3px solid var(--btc);
   border-radius:14px;padding:28px;max-width:300px;width:90%;text-align:center;
   font-family:inherit;
 }
 .ln-title{font-size:14px;font-weight:700;color:var(--btc);margin-bottom:14px}
 .ln-sats{font-size:28px;font-weight:800;color:var(--btc);letter-spacing:-0.5px}
-.ln-fiat{font-size:12px;color:#666;margin:4px 0 16px}
+.ln-fiat{font-size:12px;color:#A89880;margin:4px 0 16px}
 .ln-qr{width:170px;height:170px;background:#fff;border-radius:8px;margin:0 auto 12px;overflow:hidden}
 .ln-qr img{width:100%;height:100%}
-.ln-addr{font-size:10px;color:#555;font-family:monospace;word-break:break-all;margin-bottom:14px}
+.ln-addr{font-size:10px;color:#A89880;font-family:monospace;word-break:break-all;margin-bottom:14px}
 .ln-wallets-row{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-bottom:14px}
 .ln-wallet-btn{
-  background:#1a1a1a;border:1px solid #2a2a2a;border-radius:6px;
+  background:#1E1C1A;border:1px solid #2A2520;border-radius:6px;
   padding:5px 9px;text-decoration:none;color:#ccc;font-size:11px;font-weight:600;
   display:inline-flex;align-items:center;gap:4px;transition:all .15s;
 }
 .ln-wallet-btn:hover{border-color:var(--btc);color:#fff}
 .ln-close{
-  width:100%;background:#1a1a1a;border:1px solid #2a2a2a;color:#666;
+  width:100%;background:#1E1C1A;border:1px solid #2A2520;color:#A89880;
   border-radius:7px;padding:10px;font-size:12px;cursor:pointer;font-family:inherit;
 }
 

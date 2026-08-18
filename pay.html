@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="sats-ignore" content="true"/>
+<title>Pay with Lightning — Sats Pro</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--btc:#F7931A;--btc-l:rgba(247,147,26,0.1);--btc-b:rgba(247,147,26,0.25);--bg:#0D0D0D;--bg2:#141414;--bg3:#1c1c1c;--line:#222;--text:#f2f2f2;--muted:#666;--green:#22c55e}
+body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',system-ui,sans-serif;font-size:15px;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:48px 24px 80px}
+.back{color:var(--muted);text-decoration:none;font-size:13px;margin-bottom:36px;display:flex;align-items:center;gap:5px;align-self:flex-start;max-width:480px;width:100%}
+.back:hover{color:var(--btc)}
+.card{background:var(--bg2);border:1px solid var(--line);border-radius:16px;padding:32px;max-width:420px;width:100%}
+
+/* Plan selector */
+.plan-tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:28px}
+.plan-tab{background:var(--bg3);border:1px solid var(--line);border-radius:10px;padding:14px;cursor:pointer;transition:all .15s;text-align:center}
+.plan-tab:hover{border-color:var(--btc)}
+.plan-tab.active{border-color:var(--btc);background:var(--btc-l)}
+.plan-tab-name{font-size:14px;font-weight:700;margin-bottom:3px}
+.plan-tab.active .plan-tab-name{color:var(--btc)}
+.plan-tab-price{font-size:20px;font-weight:800;color:var(--btc)}
+.plan-tab-period{font-size:11px;color:var(--muted)}
+.plan-tab-save{font-size:10px;color:var(--green);margin-top:2px;font-weight:600}
+
+/* Amount display */
+.amount-section{text-align:center;margin-bottom:24px}
+.amount-label{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:8px}
+.amount-sats{font-size:36px;font-weight:800;color:var(--btc);letter-spacing:-0.8px}
+.amount-usd{font-size:14px;color:var(--muted);margin-top:4px}
+.amount-rate{font-size:11px;color:#444;margin-top:3px}
+
+/* QR */
+.qr-section{text-align:center;margin-bottom:20px}
+.qr-box{width:200px;height:200px;background:#fff;border-radius:12px;margin:0 auto 12px;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.qr-box img{width:100%;height:100%}
+.qr-loading{font-size:13px;color:var(--muted)}
+
+/* Lightning address */
+.ln-addr-box{background:var(--bg3);border:1px solid var(--line);border-radius:8px;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:20px}
+.ln-addr-text{font-size:12px;font-family:monospace;color:var(--text);word-break:break-all;flex:1}
+.copy-btn{background:none;border:1px solid var(--line);color:var(--muted);border-radius:6px;padding:5px 10px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap;transition:all .15s;flex-shrink:0}
+.copy-btn:hover{border-color:var(--btc);color:var(--btc)}
+.copy-btn.copied{border-color:var(--green);color:var(--green)}
+
+/* Steps */
+.steps{display:flex;flex-direction:column;gap:8px;margin-bottom:24px}
+.step-item{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--muted)}
+.step-num{width:22px;height:22px;background:var(--bg3);border:1px solid var(--line);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:1px}
+
+/* Wallets */
+.wallets-row{display:flex;gap:7px;justify-content:center;flex-wrap:wrap;margin-bottom:24px}
+.wallet-link{background:var(--bg3);border:1px solid var(--line);border-radius:7px;padding:7px 12px;text-decoration:none;color:var(--muted);font-size:12px;font-weight:600;display:flex;align-items:center;gap:5px;transition:all .15s}
+.wallet-link:hover{border-color:var(--btc);color:#fff}
+
+/* Confirm */
+.confirm-section{border-top:1px solid var(--line);padding-top:20px;text-align:center}
+.confirm-label{font-size:12px;color:var(--muted);margin-bottom:12px}
+.confirm-input{width:100%;background:var(--bg3);border:1px solid var(--line);color:var(--text);border-radius:8px;padding:10px 14px;font-size:13px;font-family:inherit;outline:none;margin-bottom:10px}
+.confirm-input:focus{border-color:var(--btc)}
+.confirm-btn{width:100%;background:var(--btc);color:#fff;border:none;border-radius:9px;padding:13px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;transition:opacity .15s}
+.confirm-btn:hover{opacity:.88}
+.confirm-btn:disabled{opacity:.5;cursor:not-allowed}
+.confirm-msg{font-size:12px;margin-top:10px;display:none;padding:10px;border-radius:7px}
+.confirm-msg.success{background:rgba(34,197,94,.1);color:var(--green);border:1px solid rgba(34,197,94,.2)}
+.confirm-msg.error{background:rgba(239,68,68,.1);color:#ef4444;border:1px solid rgba(239,68,68,.2)}
+
+/* Footer note */
+.footer-note{font-size:11px;color:#333;text-align:center;margin-top:24px;line-height:1.6}
+.footer-note a{color:var(--btc);text-decoration:none}
+</style>
+</head>
+<body>
+
+<a href="upgrade.html" class="back">← Back to plans</a>
+
+<div class="card">
+
+  <!-- Plan selector -->
+  <div class="plan-tabs">
+    <div class="plan-tab" id="tab-monthly" onclick="selectPlan('monthly')">
+      <div class="plan-tab-name">Monthly</div>
+      <div class="plan-tab-price">$4.99</div>
+      <div class="plan-tab-period">per month</div>
+    </div>
+    <div class="plan-tab active" id="tab-annual" onclick="selectPlan('annual')">
+      <div class="plan-tab-name">Annual</div>
+      <div class="plan-tab-price">$39</div>
+      <div class="plan-tab-period">per year</div>
+      <div class="plan-tab-save">2 months free</div>
+    </div>
+  </div>
+
+  <!-- Amount -->
+  <div class="amount-section">
+    <div class="amount-label">You pay</div>
+    <div class="amount-sats" id="amountSats">loading…</div>
+    <div class="amount-usd" id="amountUsd">$39 USD · Annual Plan</div>
+    <div class="amount-rate" id="amountRate">Fetching BTC price…</div>
+  </div>
+
+  <!-- QR -->
+  <div class="qr-section">
+    <div class="qr-box">
+      <img id="qrImg" src="" alt="Lightning QR"/>
+    </div>
+    <div style="font-size:12px;color:var(--muted)">Scan with your Lightning wallet</div>
+  </div>
+
+  <!-- Lightning address -->
+  <div class="ln-addr-box">
+    <div class="ln-addr-text" id="lnAddr">costlycredit50@walletofsatoshi.com</div>
+    <button class="copy-btn" id="copyBtn" onclick="copyAddr()">Copy</button>
+  </div>
+
+  <!-- Steps -->
+  <div class="steps">
+    <div class="step-item">
+      <div class="step-num">1</div>
+      <span>Open your Lightning wallet and scan the QR code above</span>
+    </div>
+    <div class="step-item">
+      <div class="step-num">2</div>
+      <span>Send the exact amount in sats shown above</span>
+    </div>
+    <div class="step-item">
+      <div class="step-num">3</div>
+      <span>Enter your email below — we'll send your license key within 1 hour</span>
+    </div>
+  </div>
+
+  <!-- Wallet recommendations -->
+  <div class="wallets-row">
+    <a href="https://www.walletofsatoshi.com" target="_blank" class="wallet-link">🟠 Wallet of Satoshi</a>
+    <a href="https://strike.me" target="_blank" class="wallet-link">⚡ Strike</a>
+    <a href="https://muun.com" target="_blank" class="wallet-link">🔒 Muun</a>
+  </div>
+
+  <!-- Confirm payment -->
+  <div class="confirm-section">
+    <div class="confirm-label">After sending — enter your email to receive the license key</div>
+    <input type="email" class="confirm-input" id="emailInput" placeholder="your@email.com"/>
+    <button class="confirm-btn" id="confirmBtn" onclick="confirmPayment()">
+      I've sent the payment →
+    </button>
+    <div class="confirm-msg" id="confirmMsg"></div>
+  </div>
+
+</div>
+
+<div class="footer-note">
+  Payment not going through? <a href="mailto:s.zabal08@gmail.com">Contact us</a> and we'll sort it out.<br>
+  License keys are sent manually within 1 hour during business hours.
+</div>
+
+<script>
+var LIGHTNING   = 'costlycredit50@walletofsatoshi.com';
+var btcRateUsd  = null;
+var currentPlan = 'annual';
+
+var PLANS = {
+  monthly: { usd: 4.99,  label: '$4.99 USD · Monthly Plan' },
+  annual:  { usd: 39,    label: '$39 USD · Annual Plan'    },
+};
+
+// ── Fetch BTC/USD rate ────────────────────────────────────────
+fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd')
+  .then(function(r){ return r.json(); })
+  .then(function(d){
+    if (d && d.bitcoin && d.bitcoin.usd) {
+      btcRateUsd = d.bitcoin.usd;
+      updateAmount();
+    }
+  })
+  .catch(function(){
+    // fallback rate
+    btcRateUsd = 95000;
+    updateAmount();
+  });
+
+// ── Plan selector ─────────────────────────────────────────────
+function selectPlan(plan) {
+  currentPlan = plan;
+  document.getElementById('tab-monthly').classList.toggle('active', plan === 'monthly');
+  document.getElementById('tab-annual').classList.toggle('active',  plan === 'annual');
+  updateAmount();
+}
+
+// ── Calculate and display amount ──────────────────────────────
+function updateAmount() {
+  if (!btcRateUsd) return;
+
+  var plan  = PLANS[currentPlan];
+  var sats  = Math.round((plan.usd / btcRateUsd) * 1e8);
+  var satsK = sats >= 10000
+    ? Math.round(sats / 1000) + 'k sats'
+    : sats.toLocaleString() + ' sats';
+
+  document.getElementById('amountSats').textContent = '~' + satsK;
+  document.getElementById('amountUsd').textContent  = plan.label;
+  document.getElementById('amountRate').textContent =
+    '1 BTC = $' + Math.round(btcRateUsd).toLocaleString() + ' USD · live rate';
+
+  // Build Lightning invoice URL
+  // Format: lightning:ADDRESS?amount=SATS (BOLT-12 / LNURL-pay compatible)
+  var lnUrl = 'lightning:' + LIGHTNING;
+  document.getElementById('lnAddr').textContent = LIGHTNING;
+
+  // QR includes the lightning address (user's wallet will prompt for amount)
+  // For exact amount, include it in the URL
+  var qrData = 'lightning:' + LIGHTNING;
+  var qrUrl  = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&margin=10&data='
+    + encodeURIComponent(qrData);
+
+  document.getElementById('qrImg').src = qrUrl;
+}
+
+// ── Copy address ──────────────────────────────────────────────
+function copyAddr() {
+  navigator.clipboard.writeText(LIGHTNING).then(function(){
+    var btn = document.getElementById('copyBtn');
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(function(){ btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+// ── Confirm payment ───────────────────────────────────────────
+function confirmPayment() {
+  var email = document.getElementById('emailInput').value.trim();
+  var msg   = document.getElementById('confirmMsg');
+  var btn   = document.getElementById('confirmBtn');
+
+  if (!email || !email.includes('@')) {
+    msg.textContent  = 'Please enter a valid email address.';
+    msg.className    = 'confirm-msg error';
+    msg.style.display = 'block';
+    return;
+  }
+
+  btn.disabled    = true;
+  btn.textContent = 'Sending…';
+
+  var plan   = PLANS[currentPlan];
+  var sats   = btcRateUsd ? Math.round((plan.usd / btcRateUsd) * 1e8) : '?';
+  var subject = encodeURIComponent('Sats Pro payment — ' + currentPlan + ' — ' + email);
+  var body    = encodeURIComponent(
+    'Hi Santiago,\n\n' +
+    'I just sent a Lightning payment for Sats Pro.\n\n' +
+    'Plan: ' + currentPlan + ' ($' + plan.usd + ' USD)\n' +
+    'Amount: ~' + sats + ' sats\n' +
+    'Email: ' + email + '\n' +
+    'Lightning address: ' + LIGHTNING + '\n\n' +
+    'Please send my license key to this email.\n\nThank you!'
+  );
+
+  // Open email client with pre-filled message
+  window.open('mailto:s.zabal08@gmail.com?subject=' + subject + '&body=' + body);
+
+  msg.innerHTML = '✅ <strong>Almost done!</strong> An email draft just opened — send it to confirm your payment. We\'ll reply with your license key within 1 hour.';
+  msg.className = 'confirm-msg success';
+  msg.style.display = 'block';
+  btn.textContent = 'Email sent ✓';
+}
+
+// Init — read plan from URL
+var urlParams = new URLSearchParams(window.location.search);
+var planParam = urlParams.get('plan');
+if (planParam && PLANS[planParam]) {
+  selectPlan(planParam);
+} else {
+  updateAmount();
+}
+</script>
+</body>
+</html>

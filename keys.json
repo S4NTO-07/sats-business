@@ -1,0 +1,12 @@
+{
+  "_comment": "Manage Pro license keys here. Add new keys when users pay. Set active:false to deactivate.",
+  "keys": {
+    "SATUNO-PRO-TEST-0001-DEMO": {
+      "active": true,
+      "plan": "pro",
+      "expires": "2099-12-31",
+      "email": "test@example.com",
+      "created": "2025-04-01"
+    }
+  }
+}

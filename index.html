@@ -347,7 +347,7 @@ footer a:hover{color:var(--primary)}
     <a href="upgrade.html">Sats Pro</a>
     <a href="how-to-pay.html">How to pay</a>
     <a href="privacy-policy.html">Privacy</a>
-    <a href="mailto:s.zabal08@gmail.com">Contact</a>
+    <a href="mailto:satunohq@proton.me">Contact</a>
   </div>
   <span>© 2025 SATUNO · Bitcoin, made useful.</span>
 </footer>
@@ -370,7 +370,7 @@ document.getElementById('pilotForm').addEventListener('submit', function(e){
   var fd = new FormData(e.target);
   var body = 'New SATUNO Business pilot:\n\nBusiness: '+fd.get('business')+'\nName: '+fd.get('name')+'\nPhone: '+fd.get('phone')+'\nEmail: '+fd.get('email')+'\nType: '+fd.get('type')+'\nSite: '+(fd.get('website')||'N/A');
   var sub = encodeURIComponent('New pilot: '+fd.get('business'));
-  window.open('mailto:s.zabal08@gmail.com?subject='+sub+'&body='+encodeURIComponent(body));
+  window.open('mailto:satunohq@proton.me?subject='+sub+'&body='+encodeURIComponent(body));
   document.getElementById('formContent').style.display='none';
   document.getElementById('successBox').style.display='block';
 });

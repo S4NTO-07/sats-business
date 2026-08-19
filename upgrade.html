@@ -84,7 +84,7 @@ tr:last-child td{border-bottom:none}
       <li class="pro">All display modes</li>
       <li class="pro">Priority support</li>
     </ul>
-    <button class="btn-buy" onclick="buyPlan('monthly-usd')">Pay with Card — $4.99/mo</button>
+    <a href="https://buy.stripe.com/7sY4gy6jx26lbT372J2Ji01" target="_blank" class="btn-buy" style="display:block;text-align:center;text-decoration:none">Pay with Card — $4.99/mo</a>
     <a href="pay.html?plan=monthly" class="btn-buy-sec" style="display:block;text-align:center;text-decoration:none;padding:12px">⚡ Pay with Lightning</a>
   </div>
 
@@ -101,7 +101,7 @@ tr:last-child td{border-bottom:none}
       <li class="pro">All display modes</li>
       <li class="pro">Priority support</li>
     </ul>
-    <button class="btn-buy" onclick="buyPlan('annual-usd')">Pay with Card — $39/yr</button>
+    <a href="https://buy.stripe.com/eVq00ieQ3fXbbT372J2Ji00" target="_blank" class="btn-buy" style="display:block;text-align:center;text-decoration:none">Pay with Card — $39/yr</a>
     <a href="pay.html?plan=annual" class="btn-buy-sec" style="display:block;text-align:center;text-decoration:none;padding:12px">⚡ Pay with Lightning</a>
   </div>
 </div>
@@ -169,14 +169,9 @@ tr:last-child td{border-bottom:none}
 
 <script>
 function buyPlan(plan) {
-  // Placeholder — replace with Stripe/BTCPay links when ready
-  var msgs = {
-    'monthly-usd': 'Stripe payment coming soon — contact satunohq@proton.me to get Pro access now.',
-    'annual-usd':  'Stripe payment coming soon — contact satunohq@proton.me to get Pro access now.',
-    'monthly-btc': 'Lightning payment coming soon — contact satunohq@proton.me to get Pro access now.',
-    'annual-btc':  'Lightning payment coming soon — contact satunohq@proton.me to get Pro access now.',
-  };
-  alert(msgs[plan] || 'Contact us to get Pro access.');
+  // Lightning plans — redirect to pay.html
+  if (plan === 'monthly-btc') { window.location.href = 'pay.html?plan=monthly'; return; }
+  if (plan === 'annual-btc')  { window.location.href = 'pay.html?plan=annual';  return; }
 }
 
 function toggleFaq(el) {
